@@ -1,0 +1,24 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!-- Search, should appear as action button -->
+    <!-- http://stackoverflow.com/questions/20512644/action-buttons-doesnt-show-up-on-action-bar-->
+
+    <item android:id="@+id/action_email"
+        android:title="@string/action_email"
+        android:showAsAction="never" />
+    <!-- Settings, should always be in the overflow -->
+    <item android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        android:showAsAction="never" />
+
+    <item android:id="@+id/action_debug"
+        android:title="Debug"
+        android:showAsAction="never" />
+
+    <item android:id="@+id/action_weatherpro"
+        android:title="Add New Location"
+        android:icon="@drawable/ic_action_new"
+        app:showAsAction="always" />
+
+
+</menu>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">JLam\'s Weather App</string>
+    <string name="hello_world">Hello!</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_search">Search</string>
+    <string name="action_email">Email</string>
+    <string name="edit_message">Email Text</string>
+    <string name="title_activity_display_message">My Message</string>
+    <string name="title_activity_check_weather">Check Weather</string>
+    <string name="get_weather">Get Weather</string>
+    <string name="get_weather_hint">Enter location</string>
+    <string name="title_activity_check_weather_pro">Improved Weather</string>
+
+    <!-- weather result display strings and labels -->
+
+    <string name="label_location">Location</string>
+    <string name="label_weatherWord">Description</string>
+    <string name="label_temp">Temperature</string>
+    <string name="label_add_location">Add Location</string>
+    <string name="no_locations_specified">No location(s) specified. Tap \'+\' to add a location.</string>
+    <string name="title_activity_debug">Debug Activity</string>
+    <string name="title_activity_detailed_weather_info">Detailed Weather Info</string>
+    <string name="title_activity_about_app">AboutAppActivity</string>
+
+    <!-- about strings; should they go here? -->
+    <string name="about_icons">Weather icons are Copyright © 2008-2014 Enthropia Inc. Used under Creative
+        Commons Attribution-Share Alike 3.0 License.</string>
+    <string name="title_activity_weather_info_location">WeatherInfoLocation</string>
+    <string name="title_activity_weather_info_location_detail">WeatherInfoLocationDetail</string>
+
+</resources>

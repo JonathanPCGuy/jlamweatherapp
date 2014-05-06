@@ -1,0 +1,16 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/detailedWeatherContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.hp.jlam.practice.DetailedWeatherInfo"
+    tools:ignore="MergeRootFrame"
+    android:orientation="vertical"
+    >
+
+    <!-- load target location on top,
+    load weather info on bottom.
+
+    for now load future forecast info always -->
+
+    </LinearLayout>

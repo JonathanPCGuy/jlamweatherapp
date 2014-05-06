@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/customborder"
+    android:layout_marginTop="16dp"
+    >
+
+    <!-- here i will put the forecast type text-->
+    <TextView
+        android:id="@+id/forecastType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="5-day forecast"
+        />
+
+    <!-- below will contain the layout holding the days
+    of future forecast, will be grid layout -->
+    <!-- layout works but does not fill width of display-->
+    <!-- if by itself it actually works -->
+    <!-- forget it, kiss, use linearlayout -->
+    <LinearLayout
+        android:id="@+id/forecastData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+    <!-- on load just add on stuff -->
+     </LinearLayout>
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/futureForecast_progressBar"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        style="?android:attr/progressBarStyleLarge"
+        />
+
+</LinearLayout>

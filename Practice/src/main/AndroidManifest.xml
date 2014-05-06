@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.hp.jlam.practice"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="18" />
+    <!-- For now support 3.0 and up only. Go back and add old support later -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.hp.jlam.practice.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.hp.jlam.practice.DisplayMessageActivity"
+            android:label="@string/title_activity_display_message"
+            android:parentActivityName="com.hp.jlam.practice.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hp.jlam.practice.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.hp.jlam.practice.CheckWeatherPro"
+            android:label="@string/title_activity_check_weather_pro"
+            android:parentActivityName="com.hp.jlam.practice.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hp.jlam.practice.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.hp.jlam.practice.DebugActivity"
+            android:label="@string/title_activity_debug"
+            android:parentActivityName="com.hp.jlam.practice.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="MainActivity" />
+        </activity>
+        <activity
+            android:name="com.hp.jlam.practice.DetailedWeatherInfo"
+            android:label="@string/title_activity_detailed_weather_info"
+            android:parentActivityName="com.hp.jlam.practice.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="MainActivity" />
+        </activity>
+        <activity
+            android:name="com.hp.jlam.practice.AboutAppActivity"
+            android:label="@string/title_activity_about_app"
+            android:parentActivityName="com.hp.jlam.practice.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="MainActivity" />
+        </activity>
+        <activity
+            android:name="com.hp.jlam.practice.WeatherInfoLocation"
+            android:label="@string/title_activity_weather_info_location" >
+        </activity>
+        <activity
+            android:name="com.hp.jlam.practice.WeatherInfoLocationDetail"
+            android:label="@string/title_activity_weather_info_location_detail" >
+        </activity>
+    </application>
+
+</manifest>
