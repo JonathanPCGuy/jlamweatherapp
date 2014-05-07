@@ -172,7 +172,7 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(intent);
                 return true;*/
             case R.id.action_weatherpro:
-                Intent weatherIntent = new Intent(this, CheckWeatherPro.class);
+                Intent weatherIntent = new Intent(this, AddLocationActivity.class);
                 weatherIntent.putExtra(EXTRA_ADD_LOCATION, true);
                 startActivityForResult(weatherIntent, REQUEST_CODE_ADD);
                 //startActivity(weatherIntent);

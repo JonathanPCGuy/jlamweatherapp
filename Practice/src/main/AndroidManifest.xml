@@ -34,7 +34,7 @@
                 android:value="com.hp.jlam.practice.MainActivity" />
         </activity>
         <activity
-            android:name="com.hp.jlam.practice.CheckWeatherPro"
+            android:name=".AddLocationActivity"
             android:label="@string/title_activity_check_weather_pro"
             android:parentActivityName="com.hp.jlam.practice.MainActivity" >
             <meta-data

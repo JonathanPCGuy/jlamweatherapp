@@ -1,5 +1,6 @@
 package com.hp.jlam.practice;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -14,6 +15,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.hp.jlam.practice.weatherapi.APICallResults;
+import com.hp.jlam.practice.weatherapi.ResultsSerializer;
+import com.hp.jlam.practice.weatherapi.WebInterfaceTask;
+
+import org.json.JSONException;
+
 //was action bar activity before...
 
 /**
@@ -22,11 +29,12 @@ your activity should instead extend ActionBarActivity,
 which is a subclass of FragmentActivity (for more information, read Adding the Action Bar).
 */
 
-public class CheckWeatherPro extends ActionBarActivity
-    implements CheckWeatherInput.OnBeginGetWeatherListener
+public class AddLocationActivity extends ActionBarActivity
+    implements CheckWeatherInput.OnBeginGetWeatherListener, APICallResults
 {
 
-    private CheckWeatherTask myTask;
+    //todo: mutex protection?
+    private WebInterfaceTask myTask;
 
     private CheckWeatherInput checkWeatherInputFragment;
     private CheckWeatherOutput checkWeatherOutputFragment;
@@ -38,14 +46,7 @@ public class CheckWeatherPro extends ActionBarActivity
         setContentView(R.layout.activity_weatherpro);
 
         // need to deal with pause as well?
-        if(this.myTask != null)
-        {
-            this.myTask = new CheckWeatherTask();
 
-
-
-            //this.myTask.useProxy = true;
-        }
 
        if(findViewById(R.id.weatherpro_container) != null)
         {
@@ -87,6 +88,30 @@ public class CheckWeatherPro extends ActionBarActivity
         }*/
     }
 
+    //todo: improve
+    @Override
+    public void UpdateResults(String jsonData)
+    {
+        try
+        {
+            WeatherLocation weatherLocation = ResultsSerializer.ParseWeatherInfo(jsonData);
+            this.UpdateResultUI(weatherLocation);
+            this.checkWeatherInputFragment.EnableButton(true);
+            this.ToggleSpinner(false);
+        }
+        catch(JSONException e)
+        {
+            UpdateWithError(e.getMessage());
+        }
+    }
+
+    @Override
+    public void UpdateWithError(String errorMessage)
+    {
+        this.checkWeatherOutputFragment.UpdateWithError(errorMessage);
+        this.checkWeatherInputFragment.EnableButton(true);
+        this.ToggleSpinner(false);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -120,9 +145,9 @@ public class CheckWeatherPro extends ActionBarActivity
         if (networkInfo != null && networkInfo.isConnected()) {
 
             // can i reuse?
-            CheckWeatherTask checkWeatherTask = new CheckWeatherTask();
-            checkWeatherTask.activity = this;
-            checkWeatherTask.execute(location);
+            this.myTask = WebInterfaceTask.CreateLocationInfoTask(location);
+            this.myTask.SetParentActivity(this);
+            this.myTask.execute();
         } else
         {
             this.ToggleSpinner(false);
@@ -132,11 +157,11 @@ public class CheckWeatherPro extends ActionBarActivity
         }
     }
 
-    public void UpdateResult(WeatherLocation result)
+    public void UpdateResultUI(WeatherLocation result)
     {
         //CheckWeatherOutput outputFragment =
           //      (CheckWeatherOutput)(getSupportFragmentManager().findFragmentByTag("checkWeatherInput"));
-        Log.d("UpdateResult", "Processing WeatherResult...");
+        Log.d("UpdateResultUI", "Processing WeatherResult...");
         this.ToggleSpinner(false);
         this.checkWeatherOutputFragment.UpdateResults(result);
         this.checkWeatherInputFragment.EnableButton(true);
@@ -166,23 +191,23 @@ public class CheckWeatherPro extends ActionBarActivity
         // OR write directly to the db
         // what to do?
         // also need to also navigate back to the main screen as well
-        Log.v("CheckWeatherPro - addLocation", "In addLocation");
+        Log.v("AddLocationActivity - addLocation", "In addLocation");
         // todo: only ensure you can click add if success
 
         // need to deep copy?
 
         // add to database
-        Log.d("CheckWeatherPro - addLocation", "Adding entry to database...");
+        Log.d("AddLocationActivity - addLocation", "Adding entry to database...");
         WeatherAppStorage weatherAppStorage = new WeatherAppStorage(this);
         long result = weatherAppStorage.addWeatherLocation(this.weatherLocationQueryResult);
 
         // navigate back to previous activity
         // pass along result
-        Log.v("CheckWeatherPro - addLocation", "Creating intent for result.");
+        Log.v("AddLocationActivity - addLocation", "Creating intent for result.");
         Intent output = new Intent();
         output.putExtra("newItemId", result);
         setResult(RESULT_OK, output);
-        Log.d("CheckWeatherPro - addLocation", "About to call finish()");
+        Log.d("AddLocationActivity - addLocation", "About to call finish()");
         finish();
         // to do: how to make activity update/refresh list?
 

@@ -127,28 +127,32 @@ public class CheckWeatherOutput extends Fragment
 
     }
 
+    public void UpdateWithError(final String errorMessage)
+    {
+        this.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                TextView textView = (TextView) getView().findViewById(R.id.textViewMessage);
+                // shouldn't have to set this on every call?
+                // is the result even going through?
 
-    // any other way to not use final?
+                Log.d("UpdateResults", "Not success, displaying error.");
+                textView.setVisibility(View.VISIBLE);
+                ((TableLayout) getView().findViewById(R.id.tableResults)).setVisibility(View.GONE);
+                textView.setText(errorMessage);
+                Log.d("UpdateResults", errorMessage);
+
+                ((Button) getView().findViewById(R.id.buttonAddLocation)).setEnabled(false);
+            }
+        });
+    }
+
     public void UpdateResults(final WeatherLocation result)
     {
         this.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                TextView textView = (TextView)getView().findViewById(R.id.textViewMessage);
-                // shouldn't have to set this on every call?
-                // is the result even going through?
-                if(!result.getIsSuccess())
-                {
-                    Log.d("UpdateResults", "Not success, displaying error.");
-                    textView.setVisibility(View.VISIBLE);
-                    ((TableLayout)getView().findViewById(R.id.tableResults)).setVisibility(View.GONE);
-                    textView.setText(result.getErrorMessage());
-                    Log.d("UpdateResults", result.getErrorMessage());
-
-                    ((Button)getView().findViewById(R.id.buttonAddLocation)).setEnabled(false);
-                }
-                else
-                {
+                    TextView textView = (TextView) getView().findViewById(R.id.textViewMessage);
                     Log.d("UpdateResults", "Much success, very weather.");
                     textView.setVisibility(View.GONE);
                     ((TableLayout)getView().findViewById(R.id.tableResults)).setVisibility(View.VISIBLE);
@@ -161,9 +165,6 @@ public class CheckWeatherOutput extends Fragment
                     Log.d("UpdateResults", result.getTemperature());
                     Log.d("UpdateResults", result.getWeather());
                     ((Button)getView().findViewById(R.id.buttonAddLocation)).setEnabled(true);
-
-
-                }
             }
         });
 

@@ -2,6 +2,10 @@ package com.hp.jlam.practice.weatherapi;
 
 // probably should group all of the weather api stuff into a namespace (package?)
 
+import android.util.Log;
+
+import com.hp.jlam.practice.WeatherLocation;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,6 +47,48 @@ public class ResultsSerializer
         }
 
         return  futureDailyForecast;
+    }
+
+    public static WeatherLocation ParseWeatherInfo(String jsonString) throws JSONException, IllegalArgumentException
+    {
+        WeatherLocation weatherLocation = new WeatherLocation();
+
+        // json parsing goes here
+        // load into json object
+
+        // is an array per spec?
+
+        // todo:for entries like Hong Kong (no location name) need to display country in location spot
+        Log.d("ParseWeatherInfo", "Attempting to parse JSON response");
+        JSONObject jsonObject = new JSONObject(jsonString);
+        // get first node
+        //JSONObject firstNode = jsonArray.getJSONObject(0);
+
+        // pull out json objects that has weather info
+        Log.d("ParseWeatherInfo", "Getting weather array and first object");
+        JSONArray weather = jsonObject.getJSONArray("weather");
+
+        weatherLocation.setWeather(weather.getJSONObject(0).getString("main"));
+
+        // null string?
+        Log.d("ParseWeatherInfo", "Getting location name (if present?)");
+        if(jsonObject.has("name"))
+        {
+            weatherLocation.setLocation(jsonObject.getString("name"));
+        }
+
+        // this should always be present
+        Log.d("ParseWeatherInfo", "Getting country.");
+        weatherLocation.setCountry(jsonObject.getJSONObject("sys").getString("country"));
+
+        // for now display in kelvin
+        Log.d("ParseWeatherInfo", "Getting temperature.");
+        weatherLocation.setTemperature(Double.toString(jsonObject.getJSONObject("main").getDouble("temp")));
+        // get the id of the location. this is different from sql row id
+        Log.d("ParseWeatherInfo", "Getting location id.");
+        weatherLocation.setLocation_id((jsonObject.getInt("id")));
+        Log.d("ParseWeatherInfo", "id value:" + Integer.toString(jsonObject.getInt("id")));
+        return weatherLocation;
     }
 
 }

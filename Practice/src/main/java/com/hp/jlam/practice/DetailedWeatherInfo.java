@@ -88,10 +88,10 @@ public class DetailedWeatherInfo extends ActionBarActivity implements APICallRes
     {
         super.onStart();
         // kick off backgroundtask to call android api
-        interfaceTask = new WebInterfaceTask();
+        interfaceTask = WebInterfaceTask.CreateFutureForecastTask(this.location_id, 5);
         interfaceTask.SetParentActivity(this);
         //String url = WebInterfaceTask.ConstructFutureForecastURL(location_id, 5);
-        interfaceTask.execute(location_id);
+        interfaceTask.execute();
         //temporarily disable show spinner
         this.ShowSpinner(true);
     }
