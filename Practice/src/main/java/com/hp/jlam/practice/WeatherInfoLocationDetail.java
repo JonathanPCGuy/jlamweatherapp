@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -26,7 +27,8 @@ import java.text.SimpleDateFormat;
  * get data from the parent container class
  *
  */
-public class WeatherInfoLocationDetail extends Fragment {
+public class WeatherInfoLocationDetail extends Fragment
+{
 
     /*
 
@@ -53,9 +55,9 @@ public class WeatherInfoLocationDetail extends Fragment {
         //LoadDummyData(futureForecastDayContainer);
         // refresh layout
         Spinner spinner = (Spinner)view.findViewById(R.id.spinnerForecastOptions);
+        // does this trigger an event?
+        spinner.setOnItemSelectedListener((DetailedWeatherInfo)this.getActivity());
         spinner.setSelection(1);
-
-
 
         return view;
 

@@ -46,6 +46,4 @@ public class WeatherInfoLocation extends Fragment {
         return view;
 
     }
-
-
 }

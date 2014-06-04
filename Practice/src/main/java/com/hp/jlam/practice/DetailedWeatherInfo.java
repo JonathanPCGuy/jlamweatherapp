@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 
 import com.hp.jlam.practice.weatherapi.APICallResults;
 import com.hp.jlam.practice.weatherapi.FutureDailyForecast;
@@ -16,7 +18,8 @@ import com.hp.jlam.practice.weatherapi.WebInterfaceTask;
 
 import org.json.JSONException;
 
-public class DetailedWeatherInfo extends ActionBarActivity implements APICallResults {
+public class DetailedWeatherInfo extends ActionBarActivity
+        implements APICallResults, AdapterView.OnItemSelectedListener {
 
     private WeatherInfoLocation weatherInfoLocationFragment;
     private WeatherInfoLocationDetail weatherInfoLocationDetailFragment;
@@ -26,6 +29,25 @@ public class DetailedWeatherInfo extends ActionBarActivity implements APICallRes
     private int location_id;
 
     private ProgressDialog pd;
+    private int[] arrayForecastSelectionValues;
+
+    // what if you had multiple selector? how do you hook up a specific one?
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)
+    {
+        // get selected item
+
+        // start task
+        // need to get value of item selected and call the function
+        // below is just to determine if roundtrip works, will need to remove this later
+        StartUpdateTask(arrayForecastSelectionValues[pos]);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent)
+    {
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +60,7 @@ public class DetailedWeatherInfo extends ActionBarActivity implements APICallRes
         {
             return;
         }
+        arrayForecastSelectionValues = getResources().getIntArray(R.array.forecast_display_values);
 
         /**
          * 1. load and fill in top fragment with info on selected city
@@ -96,11 +119,18 @@ public class DetailedWeatherInfo extends ActionBarActivity implements APICallRes
 
          */
 
+        // todo: determine if this is necessary
+        //StartUpdateTask(5);
+
+    }
+
+    protected void StartUpdateTask(int days)
+    {
         // kick off backgroundtask to call android api
         pd = ProgressDialog.show(this, "Please wait...", "Getting weather forecast.");
 
 
-        interfaceTask = WebInterfaceTask.CreateFutureForecastTask(this.location_id, 5);
+        interfaceTask = WebInterfaceTask.CreateFutureForecastTask(this.location_id, days);
         interfaceTask.SetParentActivity(this);
         interfaceTask.SetProgressDialog(pd);
         //String url = WebInterfaceTask.ConstructFutureForecastURL(location_id, 5);
@@ -159,37 +189,8 @@ public class DetailedWeatherInfo extends ActionBarActivity implements APICallRes
         this.ShowSpinner(false);
     }
 
-    public void OnForecastDataReceived(String jsonData)
-    {
-        /*
-        this.weatherInfoLocationFragment = new WeatherInfoLocation();
-        this.weatherInfoLocationDetailFragment = new WeatherInfoLocationDetail();
-         */
-
-    }
-
-    public void OnForceastDataError(String error)
+    public void onNewWeatherForecastLengthSelected()
     {
 
     }
-
-
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    /*
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_future_forecast_location, container, false);
-            return rootView;
-        }
-    }*/
-
 }
