@@ -1,5 +1,6 @@
 package com.hp.jlam.practice.weatherapi;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -44,12 +45,18 @@ public class WebInterfaceTask extends AsyncTask<Void, Void, String> {
     private Exception taskException = null;
     private WebTaskType webTaskType = WebTaskType.UNKNOWN;
     private String targetURL;
+    private ProgressDialog pd;
 
     // constructor logic below
 
     public void SetParentActivity(APICallResults activityReceivingResults)
     {
         this.activityReceivingResults = activityReceivingResults;
+    }
+
+    public void SetProgressDialog(ProgressDialog pd)
+    {
+        this.pd = pd;
     }
 
     private static String ConstructFutureForecastURL(Integer location, Integer days)
@@ -72,6 +79,7 @@ public class WebInterfaceTask extends AsyncTask<Void, Void, String> {
     private WebInterfaceTask(WebTaskType type)
     {
         this.webTaskType = type;
+        this.pd = null;
     }
 
     public static WebInterfaceTask CreateFutureForecastTask(Integer location, Integer days)
@@ -135,6 +143,11 @@ public class WebInterfaceTask extends AsyncTask<Void, Void, String> {
                 this.activityReceivingResults.UpdateWithError("Some error occurred.");
             }
 
+        }
+
+        if(pd != null)
+        {
+            pd.dismiss();
         }
     }
 

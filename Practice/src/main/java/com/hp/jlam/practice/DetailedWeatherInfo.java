@@ -1,5 +1,6 @@
 package com.hp.jlam.practice;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
@@ -23,6 +24,8 @@ public class DetailedWeatherInfo extends ActionBarActivity implements APICallRes
     private WebInterfaceTask interfaceTask;
 
     private int location_id;
+
+    private ProgressDialog pd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,13 +90,23 @@ public class DetailedWeatherInfo extends ActionBarActivity implements APICallRes
     protected void onStart()
     {
         super.onStart();
+        /*todo:
+            1. if we already have data
+
+
+         */
+
         // kick off backgroundtask to call android api
+        pd = ProgressDialog.show(this, "Please wait...", "Getting weather forecast.");
+
+
         interfaceTask = WebInterfaceTask.CreateFutureForecastTask(this.location_id, 5);
         interfaceTask.SetParentActivity(this);
+        interfaceTask.SetProgressDialog(pd);
         //String url = WebInterfaceTask.ConstructFutureForecastURL(location_id, 5);
         interfaceTask.execute();
         //temporarily disable show spinner
-        this.ShowSpinner(true);
+        //this.ShowSpinner(true);
     }
 
     public void ShowSpinner(boolean showSpinner)
