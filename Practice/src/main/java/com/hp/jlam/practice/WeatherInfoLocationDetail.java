@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
@@ -39,10 +40,6 @@ public class WeatherInfoLocationDetail extends Fragment {
 
     private LinearLayout futureForecastDayContainer;
 
-    // TODO: go off and get weather info and display spinner until data is retrieved
-    // TODO: file not found error?
-    // TODO: refactor and use 1 api library to call webapi
-
     @Override
     public View onCreateView( LayoutInflater inflater, ViewGroup container,
                               Bundle savedInstanceState)
@@ -55,38 +52,13 @@ public class WeatherInfoLocationDetail extends Fragment {
         //LinearLayout layout = (LinearLayout)view.findViewById(R.id.forecastData);
         //LoadDummyData(futureForecastDayContainer);
         // refresh layout
+        Spinner spinner = (Spinner)view.findViewById(R.id.spinnerForecastOptions);
+        spinner.setSelection(1);
 
 
 
         return view;
 
-    }
-
-    public void ShowSpinner(final boolean showSpinner)
-    {
-        this.getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                ProgressBar progressBar = (ProgressBar)getView().findViewById(R.id.futureForecast_progressBar);
-                // should be linear view
-                View forecastView = getView().findViewById(R.id.forecastData);
-                // shouldn't have to set this on every call?
-
-                if(showSpinner)
-                {
-                    progressBar.setVisibility(View.VISIBLE);
-                    forecastView.setVisibility(View.GONE);
-                    ((TableLayout)getView().findViewById(R.id.tableResults)).setVisibility(View.GONE);
-                }
-                else
-                {
-                    progressBar.setVisibility(View.GONE);
-
-                    // should I do this?
-                    forecastView.setVisibility(View.VISIBLE);
-                }
-            }
-        });
     }
 
     public void LoadWeatherResults(FutureDailyForecast futureDailyForecast)
