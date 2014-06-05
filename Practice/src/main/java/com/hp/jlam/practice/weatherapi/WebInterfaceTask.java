@@ -22,6 +22,7 @@ public class WebInterfaceTask extends AsyncTask<Void, Void, String> {
     private static final String APPID="cbd7cd2ad1367e68fdfd3fe2009d3d6d";
     private static final String baseUrl="http://api.openweathermap.org/data/2.5/";
     private static final String forecastUrlQueryStringTemplate="forecast/daily?id=%d&cnt=%d&APPID=%s";
+    private static final String forecastWithLatLonQueryStringTemplate="forecast/daily?lat=%g&lon=%g&cnt=%d&APPID=%s";
     private static final String queryStringTemplate="weather?q=\"%s\"&APPID=%s";
 
     // to determine, input and output types.
@@ -59,11 +60,11 @@ public class WebInterfaceTask extends AsyncTask<Void, Void, String> {
         this.pd = pd;
     }
 
-    private static String ConstructFutureForecastURL(Integer location, Integer days)
+    private static String ConstructFutureForecastURL(Double lat, Double lon, Integer days)
     {
         //location = location.replace(" ", "%20");
-        String formattedUrlQueryString = String.format(forecastUrlQueryStringTemplate
-            ,location, days, APPID);
+        String formattedUrlQueryString = String.format(forecastWithLatLonQueryStringTemplate
+            ,lat, lon, days, APPID);
         return baseUrl + formattedUrlQueryString;
 
     }
@@ -82,11 +83,11 @@ public class WebInterfaceTask extends AsyncTask<Void, Void, String> {
         this.pd = null;
     }
 
-    public static WebInterfaceTask CreateFutureForecastTask(Integer location, Integer days)
+    public static WebInterfaceTask CreateFutureForecastTask(Double lat, Double lon, Integer days)
     {
         Log.d("CreateFutureForecastTask","");
         WebInterfaceTask webInterfaceTask = new WebInterfaceTask(WebTaskType.FUTURE_FORECAST);
-        webInterfaceTask.targetURL = ConstructFutureForecastURL(location, days);
+        webInterfaceTask.targetURL = ConstructFutureForecastURL(lat, lon, days);
         return webInterfaceTask;
     }
 

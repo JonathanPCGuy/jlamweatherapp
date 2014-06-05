@@ -16,7 +16,9 @@ public class WeatherAppStorage extends SQLiteOpenHelper
 {
     // was 2, now will be 3
     // need location id to accurately get 5 & 7-day forecasts
-    private static final int DATABASE_VERSION = 4;
+    // changing to lat and lon since we have bun with location id sometimes returning 0
+    // todo: eventually move to system where db isn't dropped for each new revision
+    private static final int DATABASE_VERSION = 5;
     private static final String DATABASE_NAME = "weather_app_db";
 
     private static final String LOCATION_TABLE = "locations";
@@ -24,6 +26,9 @@ public class WeatherAppStorage extends SQLiteOpenHelper
     private static final String ID_COLUMN = "id";
     private static final String LOCATION_COLUMN = "location";
     private static final String COUNTRY_COLUMN = "country";
+    private static final String LOCATION_LAT_COLUMN = "latitude";
+    private static final String LOCATION_LON_COLUMN = "longitude";
+
     private static final String LOCATION_ID_COLUMN = "location_id";
 
     private static final String LOCATION_TABLE_CREATE =
@@ -31,7 +36,9 @@ public class WeatherAppStorage extends SQLiteOpenHelper
                 + ID_COLUMN + " INTEGER PRIMARY KEY,"
                 + LOCATION_COLUMN + " TEXT,"
                 + COUNTRY_COLUMN + " TEXT,"
-                + LOCATION_ID_COLUMN + " INTEGER)";
+                + LOCATION_LAT_COLUMN + " DECIMAL(6,4),"
+                + LOCATION_LON_COLUMN + " DECIMAL(7,4))";
+                //+ LOCATION_ID_COLUMN + " INTEGER)";
 
 
 
@@ -70,7 +77,11 @@ public class WeatherAppStorage extends SQLiteOpenHelper
         ContentValues contentValues = new ContentValues();
         contentValues.put(this.LOCATION_COLUMN, weatherLocation.getLocation());
         contentValues.put(this.COUNTRY_COLUMN, weatherLocation.getCountry());
-        contentValues.put(this.LOCATION_ID_COLUMN, weatherLocation.getLocation_id());
+
+        contentValues.put(this.LOCATION_LAT_COLUMN, weatherLocation.getLocation_lat());
+        contentValues.put(this.LOCATION_LON_COLUMN, weatherLocation.getLocation_lon());
+
+        //contentValues.put(this.LOCATION_ID_COLUMN, weatherLocation.getLocation_id());
         long result = db.insert(this.LOCATION_TABLE, null, contentValues);
         db.close();
         return result;
@@ -80,7 +91,7 @@ public class WeatherAppStorage extends SQLiteOpenHelper
     {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(this.LOCATION_TABLE, new String []
-                { ID_COLUMN, LOCATION_COLUMN, COUNTRY_COLUMN, LOCATION_ID_COLUMN},
+                { ID_COLUMN, LOCATION_COLUMN, COUNTRY_COLUMN, LOCATION_LAT_COLUMN, LOCATION_LON_COLUMN},
                 ID_COLUMN + "=?",
                 new String[] {String.valueOf(id)}, null, null, null, null);
         // what does the above mean
@@ -91,7 +102,7 @@ public class WeatherAppStorage extends SQLiteOpenHelper
         }
 
         WeatherLocation WeatherLocation = new WeatherLocation(
-                cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3));
+                cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getDouble(3), cursor.getDouble(4));
 
         return WeatherLocation;
     }
@@ -117,7 +128,9 @@ public class WeatherAppStorage extends SQLiteOpenHelper
                 weatherLocation.setId(Integer.parseInt(cursor.getString(0)));
                 weatherLocation.setLocation(cursor.getString(1));
                 weatherLocation.setCountry(cursor.getString(2));
-                weatherLocation.setLocation_id(Integer.parseInt(cursor.getString(3)));
+                weatherLocation.setLocation_lat(Double.parseDouble(cursor.getString(3)));
+                weatherLocation.setLocation_lon(Double.parseDouble(cursor.getString(4)));
+                //weatherLocation.setLocation_id(Integer.parseInt(cursor.getString(3)));
 
                 WeatherLocationList.add(weatherLocation);
 

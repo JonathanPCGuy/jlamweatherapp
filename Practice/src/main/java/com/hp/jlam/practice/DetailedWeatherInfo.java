@@ -26,7 +26,8 @@ public class DetailedWeatherInfo extends ActionBarActivity
 
     private WebInterfaceTask interfaceTask;
 
-    private int location_id;
+    private double location_lat;
+    private double location_lon;
 
     private ProgressDialog pd;
     private int[] arrayForecastSelectionValues;
@@ -75,7 +76,8 @@ public class DetailedWeatherInfo extends ActionBarActivity
 
         Intent intent = getIntent();
 
-        this.location_id = intent.getIntExtra(ExtraConstants.EXTRA_LOCATION_ID, -1);
+        this.location_lat = intent.getDoubleExtra(ExtraConstants.EXTRA_LOCATION_LAT, -9999);
+        this.location_lon = intent.getDoubleExtra(ExtraConstants.EXTRA_LOCATION_LON, -9999);
         // TODO: add extra to pass in location name, or maybe pull it from location id api call?
         // if id changes then we're in trouble...
 
@@ -130,10 +132,9 @@ public class DetailedWeatherInfo extends ActionBarActivity
         pd = ProgressDialog.show(this, "Please wait...", "Getting weather forecast.");
 
 
-        interfaceTask = WebInterfaceTask.CreateFutureForecastTask(this.location_id, days);
+        interfaceTask = WebInterfaceTask.CreateFutureForecastTask(this.location_lat, this.location_lon, days);
         interfaceTask.SetParentActivity(this);
         interfaceTask.SetProgressDialog(pd);
-        //String url = WebInterfaceTask.ConstructFutureForecastURL(location_id, 5);
         interfaceTask.execute();
         //temporarily disable show spinner
         //this.ShowSpinner(true);

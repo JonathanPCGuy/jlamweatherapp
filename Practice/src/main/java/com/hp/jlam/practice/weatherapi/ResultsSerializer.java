@@ -81,10 +81,15 @@ public class ResultsSerializer
         Log.d("ParseWeatherInfo", "Getting country.");
         weatherLocation.setCountry(jsonObject.getJSONObject("sys").getString("country"));
 
-        // for now display in kelvin
+        // temps are in kelvin
         Log.d("ParseWeatherInfo", "Getting temperature.");
         weatherLocation.setTemperature(Double.toString(jsonObject.getJSONObject("main").getDouble("temp")));
         // get the id of the location. this is different from sql row id
+        Log.d("ParseWeatherInfo", "Getting location lat and lon.");
+        JSONObject jsonObjectCoord = jsonObject.getJSONObject("coord");
+        weatherLocation.setLocation_lat(jsonObjectCoord.getDouble("lat"));
+        weatherLocation.setLocation_lon(jsonObjectCoord.getDouble("lon"));
+
         Log.d("ParseWeatherInfo", "Getting location id.");
         weatherLocation.setLocation_id((jsonObject.getInt("id")));
         Log.d("ParseWeatherInfo", "id value:" + Integer.toString(jsonObject.getInt("id")));

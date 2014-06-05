@@ -7,6 +7,10 @@ public class WeatherLocation
 {
     private String location;
     private int location_id;
+
+    private double location_lat;
+    private double location_lon;
+
     private String country;
     private String weather;
     private String weatherDescription;
@@ -25,6 +29,9 @@ public class WeatherLocation
         this.InitStrings();
         this.errorMessage = new String();
         this.location_id = 0;
+
+        this.location_lat = 0;
+        this.location_lon = 0;
     }
 
     private void InitStrings()
@@ -36,30 +43,17 @@ public class WeatherLocation
         this.temperature = new String();
     }
 
-    public WeatherLocation(int id, String location, String country, int location_id)
+    public WeatherLocation(int id, String location, String country, double location_lat, double location_lon)
     {
         this.isSuccess = true;
         this.InitStrings();
         this.location = location;
         this.country = country;
-        this.location_id = location_id;
+
+        this.location_lat = location_lat;
+        this.location_lon = location_lon;
+
         this.id = id;
-    }
-
-    public WeatherLocation(String location, String country, int location_id)
-    {
-        this.InitStrings();
-        this.location = location;
-        this.country = country;
-        this.location_id = location_id;
-    }
-
-    // probably should drop usage of isSuccess?
-    public WeatherLocation(String errorMessage)
-    {
-        this.isSuccess = false;
-        this.errorMessage = errorMessage;
-        this.InitStrings();
     }
 
     public String getFullLocation()
@@ -86,6 +80,14 @@ public class WeatherLocation
     public void setLocation_id(int id) {this.location_id = id;}
 
     public int getLocation_id() {return this.location_id;}
+
+    public void setLocation_lat(double location_lat) {this.location_lat = location_lat;}
+
+    public double getLocation_lat() { return  this.location_lat;}
+
+    public void setLocation_lon(double location_lon) {this.location_lon = location_lon;}
+
+    public double getLocation_lon(){return  this.location_lon;}
 
     public boolean getIsSuccess()
     {
