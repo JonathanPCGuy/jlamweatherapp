@@ -60,7 +60,7 @@ public class WebInterfaceTask extends AsyncTask<Void, Void, String> {
         this.pd = pd;
     }
 
-    private static String ConstructFutureForecastURL(Double lat, Double lon, Integer days)
+    public static String ConstructFutureForecastURL(Double lat, Double lon, Integer days)
     {
         //location = location.replace(" ", "%20");
         String formattedUrlQueryString = String.format(forecastWithLatLonQueryStringTemplate
@@ -69,7 +69,7 @@ public class WebInterfaceTask extends AsyncTask<Void, Void, String> {
 
     }
 
-    private static String ConstructLocationInfoURL(String locationQueryString)
+    public static String ConstructLocationInfoURL(String locationQueryString)
     {
         String formattedUrlQueryString = String.format(queryStringTemplate
                 ,locationQueryString.replace(" ", "%20"), APPID);

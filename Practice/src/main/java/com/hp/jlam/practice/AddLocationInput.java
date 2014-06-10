@@ -15,7 +15,7 @@ import android.widget.EditText;
 /**
  * Created by lamjon on 1/30/14.
  */
-public class CheckWeatherInput extends Fragment
+public class AddLocationInput extends Fragment
     implements View.OnClickListener
 {
     OnBeginGetWeatherListener mGetWeatherCallback;

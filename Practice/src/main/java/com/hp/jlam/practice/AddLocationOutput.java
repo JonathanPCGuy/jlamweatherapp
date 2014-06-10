@@ -14,7 +14,7 @@ import android.widget.TextView;
 /**
  * Created by lamjon on 1/30/14.
  */
-public class CheckWeatherOutput extends Fragment
+public class AddLocationOutput extends Fragment
 
 {
     // since the API only returns 1 result (does it really?) we can

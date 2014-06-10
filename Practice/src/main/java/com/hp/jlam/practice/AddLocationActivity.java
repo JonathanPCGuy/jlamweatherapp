@@ -30,14 +30,14 @@ which is a subclass of FragmentActivity (for more information, read Adding the A
 */
 
 public class AddLocationActivity extends ActionBarActivity
-    implements CheckWeatherInput.OnBeginGetWeatherListener, APICallResults
+    implements AddLocationInput.OnBeginGetWeatherListener, APICallResults
 {
 
     //todo: mutex protection?
     private WebInterfaceTask myTask;
 
-    private CheckWeatherInput checkWeatherInputFragment;
-    private CheckWeatherOutput checkWeatherOutputFragment;
+    private AddLocationInput addLocationInputFragment;
+    private AddLocationOutput addLocationOutputFragment;
     private WeatherLocation weatherLocationQueryResult;
 
     @Override
@@ -54,23 +54,23 @@ public class AddLocationActivity extends ActionBarActivity
                 return;
             }
 
-            this.checkWeatherInputFragment = new CheckWeatherInput();
-            this.checkWeatherInputFragment.mGetWeatherCallback = this;
+            this.addLocationInputFragment = new AddLocationInput();
+            this.addLocationInputFragment.mGetWeatherCallback = this;
 
 
-            this.checkWeatherOutputFragment = new CheckWeatherOutput();
+            this.addLocationOutputFragment = new AddLocationOutput();
 
             // set args
 
-            //checkWeatherOutputFragment.
+            //addLocationOutputFragment.
 
             // add to main layout
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.weatherpro_container, this.checkWeatherInputFragment, "checkWeatherInput").commit();
+                    .add(R.id.weatherpro_container, this.addLocationInputFragment, "checkWeatherInput").commit();
 
             // why is this on top
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.weatherpro_container, this.checkWeatherOutputFragment, "checkWeatherOutput").commit();
+                    .add(R.id.weatherpro_container, this.addLocationOutputFragment, "checkWeatherOutput").commit();
 
             // this isn't working
             // can't do it here, onCreate layout not ready?
@@ -96,7 +96,7 @@ public class AddLocationActivity extends ActionBarActivity
         {
             WeatherLocation weatherLocation = ResultsSerializer.ParseWeatherInfo(jsonData);
             this.UpdateResultUI(weatherLocation);
-            this.checkWeatherInputFragment.EnableButton(true);
+            this.addLocationInputFragment.EnableButton(true);
             this.ToggleSpinner(false);
         }
         catch(JSONException e)
@@ -108,8 +108,8 @@ public class AddLocationActivity extends ActionBarActivity
     @Override
     public void UpdateWithError(String errorMessage)
     {
-        this.checkWeatherOutputFragment.UpdateWithError(errorMessage);
-        this.checkWeatherInputFragment.EnableButton(true);
+        this.addLocationOutputFragment.UpdateWithError(errorMessage);
+        this.addLocationInputFragment.EnableButton(true);
         this.ToggleSpinner(false);
     }
 
@@ -137,7 +137,7 @@ public class AddLocationActivity extends ActionBarActivity
     {
         // callback called here
         this.ToggleSpinner(true);
-        this.checkWeatherInputFragment.EnableButton(false);
+        this.addLocationInputFragment.EnableButton(false);
 
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -159,12 +159,12 @@ public class AddLocationActivity extends ActionBarActivity
 
     public void UpdateResultUI(WeatherLocation result)
     {
-        //CheckWeatherOutput outputFragment =
-          //      (CheckWeatherOutput)(getSupportFragmentManager().findFragmentByTag("checkWeatherInput"));
+        //AddLocationOutput outputFragment =
+          //      (AddLocationOutput)(getSupportFragmentManager().findFragmentByTag("checkWeatherInput"));
         Log.d("UpdateResultUI", "Processing WeatherResult...");
         this.ToggleSpinner(false);
-        this.checkWeatherOutputFragment.UpdateResults(result);
-        this.checkWeatherInputFragment.EnableButton(true);
+        this.addLocationOutputFragment.UpdateResults(result);
+        this.addLocationInputFragment.EnableButton(true);
         this.weatherLocationQueryResult = result;
         //outputFragment.UpdateResults(result);
                // getFragmentManager().findFragmentByTag("checkWeatherInput");
@@ -216,7 +216,7 @@ public class AddLocationActivity extends ActionBarActivity
     public void UpdateProgress(String message)
     {
         Log.d("UpdateProgress", message);
-        //this.checkWeatherOutputFragment.UpdateProgress(message);
+        //this.addLocationOutputFragment.UpdateProgress(message);
 
         //outputFragment.UpdateProgress(message);
     }
@@ -226,11 +226,11 @@ public class AddLocationActivity extends ActionBarActivity
         Log.d("ToggleSpinner", "showSpinner:" + showSpinner);
         if(showSpinner)
         {
-            this.checkWeatherOutputFragment.ShowSpinner();
+            this.addLocationOutputFragment.ShowSpinner();
         }
         else
         {
-            this.checkWeatherOutputFragment.HideSpinner();
+            this.addLocationOutputFragment.HideSpinner();
         }
     }
 
