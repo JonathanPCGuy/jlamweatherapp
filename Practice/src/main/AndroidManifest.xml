@@ -65,14 +65,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="MainActivity" />
         </activity>
-        <activity
-            android:name="com.hp.jlam.practice.WeatherInfoLocation"
-            android:label="@string/title_activity_weather_info_location" >
-        </activity>
-        <activity
-            android:name="com.hp.jlam.practice.WeatherInfoLocationDetail"
-            android:label="@string/title_activity_weather_info_location_detail" >
-        </activity>
+        <service
+            android:name="WeatherService"
+            android:icon="@drawable/ic_stat_sun"
+            android:label="@string/local_service_name">
+        </service>
     </application>
+
+
 
 </manifest>

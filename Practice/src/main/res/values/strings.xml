@@ -29,5 +29,8 @@
         Commons Attribution-Share Alike 3.0 License.</string>
     <string name="title_activity_weather_info_location">WeatherInfoLocation</string>
     <string name="title_activity_weather_info_location_detail">WeatherInfoLocationDetail</string>
+    <string name="local_service_started">WeatherService started.</string>
+    <string name="local_service_stopped">WeatherService stopped.</string>
+    <string name="local_service_name">JLam Weather App Service</string>
 
 </resources>

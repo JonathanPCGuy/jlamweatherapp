@@ -1,6 +1,8 @@
 package com.hp.jlam.practice;
 
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +27,12 @@ public class MainActivity extends ActionBarActivity {
     protected ArrayList<WeatherLocation> weatherLocations;
     protected WeatherLocationAdapter weatherLocationAdapter;
     private ListView locationListView;
+
+    // holds the notification object
+    // so we can keep track of it
+    // (or do we just hold the id?)
+
+    private static int theNotificationID = 001;
 
     /*public void sendMessage(View view)
     {
@@ -108,32 +116,23 @@ public class MainActivity extends ActionBarActivity {
         Log.d("MainActivity - onCreate", "Signal list view that contents may have been updated.");
         this.UpdateWeatherLocationListView();
 
-
-
-
-        // first let's insert some rows into db to ensure correct operation
         /*
-        Log.d("MainActivity", "Inserting entry into table...");
-        weatherAppStorage.addWeatherLocation(
-                new WeatherLocation("Hong Kong", "China"));
-        weatherAppStorage.addWeatherLocation(
-                new WeatherLocation("Houston", "United States of America"));
-        weatherAppStorage.addWeatherLocation(
-                new WeatherLocation("London", "GB")
-        );*/
+        NotificationCompat.Builder nBuilder =
+                new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.ic_stat_sun)
+                .setContentTitle("Hello world!")
+                .setContentText("My notification.");
 
 
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
+        notificationManager.notify(MainActivity.theNotificationID, nBuilder.build());
+        */
 
-        // output results to log first
-
-        // later on we'll link it to UI (does it have to be manual?)
-
-
-        // if save data found load and display
-
-        // todo: in background get weather data and display
-
+        // todo: how to do communication to service, background ttask, etc.
+        Intent intent = new Intent(this, WeatherService.class);
+        startService(intent);
     }
 
     private void InitializeStorage()
