@@ -19,6 +19,9 @@ public class WeatherService extends Service
     private int NOTIFICATION = R.string.local_service_started;
     private NotificationManager mNM;
 
+    // should be a condition variable, change it later
+    private Boolean mQuit = false;
+
     public class LocalBinder extends Binder
     {
         WeatherService getService()
@@ -33,7 +36,7 @@ public class WeatherService extends Service
         mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 
         // display the (persistent?) notification
-        showNotification();
+        //showNotification();
 
     }
 
@@ -41,15 +44,40 @@ public class WeatherService extends Service
     public int onStartCommand(Intent intent, int flags, int startId)
     {
         Log.i("WeatherService", "Received start id " + startId + ":" + intent);
+        // to do: insert timers to update weather info
+        // or should that go in the main app?
+        mQuit = false;
+
+        // this thread will run for a while then quit
+        // will simulate triggering a background task from the app
+        // need to figure out how to push updates to the notification bar
+
+        backgroundTask = new WeatherBackgroundTask();
+        backgroundTask.setRunning(true);
+        backgroundTask.SetupContextObject(this); // is this really bad?!
+        backgroundTask.start();
 
         return START_STICKY;
     }
 
+    private WeatherBackgroundTask backgroundTask;
+
     @Override
     public void onDestroy()
     {
-        mNM.cancel(NOTIFICATION);
-
+        //mNM.cancel(NOTIFICATION);
+        if(backgroundTask.isAlive())
+        {
+            backgroundTask.setRunning(false);
+            try
+            {
+                backgroundTask.join();
+            }
+            catch(InterruptedException e)
+            {
+                Log.d("onDestroy WeatherService", e.getMessage());
+            }
+        }
         Toast.makeText(this, R.string.local_service_stopped, Toast.LENGTH_SHORT).show();
     }
 
@@ -71,16 +99,22 @@ public class WeatherService extends Service
         CharSequence text = getText(R.string.local_service_started);
         CharSequence title = getText(R.string.local_service_name);
 
-        NotificationCompat.Builder notification = new NotificationCompat.Builder(this)
-                .setContentText(text)
-                .setContentTitle(title)
-                .setSmallIcon(R.drawable.ic_stat_sun)
-                .setWhen(System.currentTimeMillis());
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+                new Intent(this, MainActivity.class), 0);
 
-        // if user selects notification, launch the app
-        // todo: figure out how to do this
-        /*PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, Ma))*/
+        NotificationCompat.Builder notification = new NotificationCompat.Builder(this)
+            .setContentText(text)
+            .setContentTitle(title)
+            .setSmallIcon(R.drawable.ic_stat_sun)
+            .setWhen(System.currentTimeMillis())
+            .setContentIntent(contentIntent);
+
+        // ok, it looks like it's better to create an alarm, then trigger a task every x seconds
+        // instead of creating an actual ongoing background task that runs constantly
+        // still, let's go ahead and do one temporarily
+        // so we can learn
+
+
 
         notification.setOngoing(true);
         mNM.notify(NOTIFICATION, notification.build());

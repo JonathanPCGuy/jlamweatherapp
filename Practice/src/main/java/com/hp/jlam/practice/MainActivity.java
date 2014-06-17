@@ -21,9 +21,6 @@ public class MainActivity extends ActionBarActivity {
     public final static String EXTRA_ADD_LOCATION ="IsAddRequest";
     public final int REQUEST_CODE_ADD = 1;
 
-    private final static String baseURI = "http://api.openweathermap.org/data/2.5/weather";
-    private final static String queryString ="q=%s";
-
     protected ArrayList<WeatherLocation> weatherLocations;
     protected WeatherLocationAdapter weatherLocationAdapter;
     private ListView locationListView;
