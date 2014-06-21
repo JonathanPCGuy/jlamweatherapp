@@ -94,7 +94,7 @@ public class AddLocationActivity extends ActionBarActivity
     {
         try
         {
-            WeatherLocation weatherLocation = ResultsSerializer.ParseWeatherInfo(jsonData);
+            WeatherLocation weatherLocation = ResultsSerializer.ParseCurrentWeather(jsonData);
             this.UpdateResultUI(weatherLocation);
             this.addLocationInputFragment.EnableButton(true);
             this.ToggleSpinner(false);
@@ -145,7 +145,7 @@ public class AddLocationActivity extends ActionBarActivity
         if (networkInfo != null && networkInfo.isConnected()) {
 
             // can i reuse?
-            this.myTask = WebInterfaceTask.CreateLocationInfoTask(location);
+            this.myTask = WebInterfaceTask.CreateWeatherLocationTask(location);
             this.myTask.SetParentActivity(this);
             this.myTask.execute();
         } else

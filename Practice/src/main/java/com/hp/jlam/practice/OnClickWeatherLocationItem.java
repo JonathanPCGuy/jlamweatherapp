@@ -19,18 +19,18 @@ public class OnClickWeatherLocationItem implements AdapterView.OnItemClickListen
         Context context = view.getContext();
         // for now don't get the actual item; just fire up the
         // detailed activity
-        Intent weatherIntent = new Intent(context, DetailedWeatherInfo.class);
+        Intent weatherIntent = new Intent(context, DetailedWeatherActivity.class);
 
-        weatherIntent.putExtra(ExtraConstants.EXTRA_LOCATION_LAT,
+        weatherIntent.putExtra(ExtraConstants.LOCATION_LAT,
                 ((WeatherLocation)parent.getItemAtPosition(position)).getLocation_lat());
 
-        weatherIntent.putExtra(ExtraConstants.EXTRA_LOCATION_LON,
+        weatherIntent.putExtra(ExtraConstants.LOCATION_LON,
                 ((WeatherLocation)parent.getItemAtPosition(position)).getLocation_lon());
 
-        weatherIntent.putExtra(ExtraConstants.EXTRA_LOCATION_COUNTRY,
+        weatherIntent.putExtra(ExtraConstants.LOCATION_COUNTRY,
                 ((WeatherLocation)parent.getItemAtPosition(position)).getCountry());
 
-        weatherIntent.putExtra(ExtraConstants.EXTRA_LOCATION_LOCATION,
+        weatherIntent.putExtra(ExtraConstants.LOCATION_LOCATION,
                 ((WeatherLocation)parent.getItemAtPosition(position)).getLocation());
 
         context.startActivity(weatherIntent);

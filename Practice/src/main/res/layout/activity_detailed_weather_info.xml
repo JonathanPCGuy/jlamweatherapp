@@ -3,7 +3,7 @@
     android:id="@+id/detailedWeatherContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hp.jlam.practice.DetailedWeatherInfo"
+    tools:context="com.hp.jlam.practice.DetailedWeatherActivity"
     tools:ignore="MergeRootFrame"
     android:orientation="vertical"
     >

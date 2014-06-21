@@ -17,21 +17,27 @@ public class WeatherLocation
     private String temperature;
     //timestamp?
 
-    private boolean isSuccess;
-    private String errorMessage;
-
-    public long tag;
     public int id;
 
     public WeatherLocation()
     {
-        this.isSuccess = true;
         this.InitStrings();
-        this.errorMessage = new String();
         this.location_id = 0;
 
         this.location_lat = 0;
         this.location_lon = 0;
+    }
+
+    public WeatherLocation(int id, String location, String country, double location_lat, double location_lon)
+    {
+        this.InitStrings();
+        this.location = location;
+        this.country = country;
+
+        this.location_lat = location_lat;
+        this.location_lon = location_lon;
+
+        this.id = id;
     }
 
     private void InitStrings()
@@ -43,18 +49,7 @@ public class WeatherLocation
         this.temperature = new String();
     }
 
-    public WeatherLocation(int id, String location, String country, double location_lat, double location_lon)
-    {
-        this.isSuccess = true;
-        this.InitStrings();
-        this.location = location;
-        this.country = country;
 
-        this.location_lat = location_lat;
-        this.location_lon = location_lon;
-
-        this.id = id;
-    }
 
     public String getFullLocation()
     {
@@ -88,16 +83,6 @@ public class WeatherLocation
     public void setLocation_lon(double location_lon) {this.location_lon = location_lon;}
 
     public double getLocation_lon(){return  this.location_lon;}
-
-    public boolean getIsSuccess()
-    {
-        return this.isSuccess;
-    }
-
-    public String getErrorMessage()
-    {
-        return this.errorMessage;
-    }
 
     public void setLocation(String location)
     {

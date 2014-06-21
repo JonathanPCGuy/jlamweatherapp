@@ -18,7 +18,7 @@ import com.hp.jlam.practice.weatherapi.WebInterfaceTask;
 
 import org.json.JSONException;
 
-public class DetailedWeatherInfo extends ActionBarActivity
+public class DetailedWeatherActivity extends ActionBarActivity
         implements APICallResults, AdapterView.OnItemSelectedListener {
 
     private WeatherInfoLocation weatherInfoLocationFragment;
@@ -76,19 +76,19 @@ public class DetailedWeatherInfo extends ActionBarActivity
 
         Intent intent = getIntent();
 
-        this.location_lat = intent.getDoubleExtra(ExtraConstants.EXTRA_LOCATION_LAT, -9999);
-        this.location_lon = intent.getDoubleExtra(ExtraConstants.EXTRA_LOCATION_LON, -9999);
+        this.location_lat = intent.getDoubleExtra(ExtraConstants.LOCATION_LAT, -9999);
+        this.location_lon = intent.getDoubleExtra(ExtraConstants.LOCATION_LON, -9999);
         // TODO: add extra to pass in location name, or maybe pull it from location id api call?
         // if id changes then we're in trouble...
 
         // add to main layout
-        Log.d("onCreate DetailedWeatherInfo", "About to inflate top and bottom fragments.");
+        Log.d("onCreate DetailedWeatherActivity", "About to inflate top and bottom fragments.");
 
         // can i just do new or should i store in variables?
         this.weatherInfoLocationFragment = new WeatherInfoLocation();
 
-        this.weatherInfoLocationFragment.SetLocationInfo(intent.getStringExtra(ExtraConstants.EXTRA_LOCATION_LOCATION),
-                intent.getStringExtra(ExtraConstants.EXTRA_LOCATION_COUNTRY));
+        this.weatherInfoLocationFragment.SetLocationInfo(intent.getStringExtra(ExtraConstants.LOCATION_LOCATION),
+                intent.getStringExtra(ExtraConstants.LOCATION_COUNTRY));
 
         this.weatherInfoLocationDetailFragment = new WeatherInfoLocationDetail();
         // ok, it works, but one fragment is covering the other
@@ -171,7 +171,7 @@ public class DetailedWeatherInfo extends ActionBarActivity
     {
         try
         {
-            FutureDailyForecast futureDailyForecast = ResultsSerializer.ProcessFutureDailyForecastJSON(jsonData);
+            FutureDailyForecast futureDailyForecast = ResultsSerializer.ParseFutureDailyForecast(jsonData);
             this.weatherInfoLocationDetailFragment.LoadWeatherResults(futureDailyForecast);
             this.ShowSpinner(false);
         }

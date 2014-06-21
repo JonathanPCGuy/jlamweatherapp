@@ -127,9 +127,9 @@ public class MainActivity extends ActionBarActivity {
         notificationManager.notify(MainActivity.theNotificationID, nBuilder.build());
         */
 
-        // todo: how to do communication to service, background ttask, etc.
-        Intent intent = new Intent(this, WeatherService.class);
-        startService(intent);
+        // todo: how to do communication to service, background task, etc.
+        //Intent intent = new Intent(this, WeatherService.class);
+        //startService(intent);
     }
 
     private void InitializeStorage()

@@ -5,11 +5,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.hp.jlam.practice.weatherapi.DailyForecast;
@@ -56,7 +53,7 @@ public class WeatherInfoLocationDetail extends Fragment
         // refresh layout
         Spinner spinner = (Spinner)view.findViewById(R.id.spinnerForecastOptions);
         // does this trigger an event?
-        spinner.setOnItemSelectedListener((DetailedWeatherInfo)this.getActivity());
+        spinner.setOnItemSelectedListener((DetailedWeatherActivity)this.getActivity());
         spinner.setSelection(1);
 
         return view;

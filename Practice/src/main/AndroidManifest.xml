@@ -50,7 +50,7 @@
                 android:value="MainActivity" />
         </activity>
         <activity
-            android:name="com.hp.jlam.practice.DetailedWeatherInfo"
+            android:name=".DetailedWeatherActivity"
             android:label="@string/title_activity_detailed_weather_info"
             android:parentActivityName="com.hp.jlam.practice.MainActivity" >
             <meta-data
@@ -70,6 +70,7 @@
             android:icon="@drawable/ic_stat_sun"
             android:label="@string/local_service_name">
         </service>
+        <service android:name=".WeatherUpdateIntentService"/>
     </application>
 
 

@@ -25,12 +25,17 @@ public class WebInterfaceTask extends AsyncTask<Void, Void, String> {
     private static final String forecastWithLatLonQueryStringTemplate="forecast/daily?lat=%g&lon=%g&cnt=%d&APPID=%s";
     private static final String queryStringTemplate="weather?q=\"%s\"&APPID=%s";
 
+    private static final String latLonTemplate = "lat=%g&lon=%g";
+    private static final String locationQueryTemplate = "q=\"%s\"";
+
+    private static final String weatherLocationTemplate = "weather?%s&APPID=%s";
+
     // to determine, input and output types.
     // input: location)id
 
     // to really make it generic i would define an interface that
     // other activities would have to implement
-    // for now hardcode for 1 type (DetailedWeatherInfo)
+    // for now hardcode for 1 type (DetailedWeatherActivity)
 
     // interface instance to allow update of results
     private APICallResults activityReceivingResults;
@@ -43,6 +48,9 @@ public class WebInterfaceTask extends AsyncTask<Void, Void, String> {
     }
 
     private boolean isSuccess = true;
+
+    public boolean get_isSuccess() {return this.isSuccess;}
+
     private Exception taskException = null;
     private WebTaskType webTaskType = WebTaskType.UNKNOWN;
     private String targetURL;
@@ -63,18 +71,39 @@ public class WebInterfaceTask extends AsyncTask<Void, Void, String> {
     public static String ConstructFutureForecastURL(Double lat, Double lon, Integer days)
     {
         //location = location.replace(" ", "%20");
-        String formattedUrlQueryString = String.format(forecastWithLatLonQueryStringTemplate
-            ,lat, lon, days, APPID);
-        return baseUrl + formattedUrlQueryString;
+        String formattedFullQueryString = String.format(
+                forecastWithLatLonQueryStringTemplate,
+                lat,
+                lon,
+                days,
+                APPID);
+        return baseUrl + formattedFullQueryString;
 
     }
 
-    public static String ConstructLocationInfoURL(String locationQueryString)
+    public static String ConstructLocationWeatherURL(String locationQueryString)
     {
-        String formattedUrlQueryString = String.format(queryStringTemplate
-                ,locationQueryString.replace(" ", "%20"), APPID);
+        String formattedQuery = String.format(locationQueryTemplate
+                ,locationQueryString.replace(" ", "%20"));
 
-        return baseUrl + formattedUrlQueryString;
+        String formattedFullQueryString = String.format(
+                weatherLocationTemplate,
+                formattedQuery,
+                APPID);
+
+        return baseUrl + formattedFullQueryString;
+    }
+
+    public static String ConstructLocationWeatherURL(Double lat, Double lon)
+    {
+        String formattedQuery = String.format(latLonTemplate, lat, lon);
+
+        String formattedLocationWeatherQueryString = String.format(
+                weatherLocationTemplate,
+                formattedQuery,
+                APPID);
+
+        return baseUrl + formattedLocationWeatherQueryString;
     }
 
     private WebInterfaceTask(WebTaskType type)
@@ -91,11 +120,19 @@ public class WebInterfaceTask extends AsyncTask<Void, Void, String> {
         return webInterfaceTask;
     }
 
-    public static WebInterfaceTask CreateLocationInfoTask(String locationQueryString)
+    public static WebInterfaceTask CreateWeatherLocationTask(String locationQueryString)
     {
-        Log.d("CreateLocationInfoTask","");
+        Log.d("CreateWeatherLocationTask","Creating a current weather task, query based.");
         WebInterfaceTask webInterfaceTask = new WebInterfaceTask(WebTaskType.LOCATION_INFO);
-        webInterfaceTask.targetURL = ConstructLocationInfoURL(locationQueryString);
+        webInterfaceTask.targetURL = ConstructLocationWeatherURL(locationQueryString);
+        return webInterfaceTask;
+    }
+
+    public static WebInterfaceTask CreateWeatherLocationTask(Double lat, Double lon)
+    {
+        Log.d("CreateWeatherLocationTask", "Creating a current weather task, lat/lon based.");
+        WebInterfaceTask webInterfaceTask = new WebInterfaceTask((WebTaskType.LOCATION_INFO));
+        webInterfaceTask.targetURL = ConstructLocationWeatherURL(lat, lon);
         return webInterfaceTask;
     }
 
@@ -124,26 +161,36 @@ public class WebInterfaceTask extends AsyncTask<Void, Void, String> {
         if(isSuccess == true)
         {
             Log.d("onPostExecute", "Successfully got forecast");
-            this.activityReceivingResults.UpdateResults(result);
+            if(this.activityReceivingResults != null)
+            {
+                this.activityReceivingResults.UpdateResults(result);
+            }
         }
         else
         {
             Log.d("onPostExecute", "Error while attempting to get forecast.");
+            String errorMessage;// = new String();
             if(this.taskException != null)
             {
                 Log.d("onPostExecute", "Exception thrown:" + taskException.getClass().getName());
-                if(taskException.getMessage() == null) {
-                    this.activityReceivingResults.UpdateWithError(taskException.getClass().getName());
+                if(taskException.getMessage() == null)
+                {
+                    errorMessage = taskException.getClass().getName();
                 }
-                else {
-                    this.activityReceivingResults.UpdateWithError(taskException.getMessage());
+                else
+                {
+                    errorMessage = taskException.getMessage();
                 }
             }
             else
             {
-                this.activityReceivingResults.UpdateWithError("Some error occurred.");
+                errorMessage = "Some error occurred.";
             }
 
+            if(this.activityReceivingResults != null)
+            {
+                this.activityReceivingResults.UpdateWithError(errorMessage);
+            }
         }
 
         if(pd != null)

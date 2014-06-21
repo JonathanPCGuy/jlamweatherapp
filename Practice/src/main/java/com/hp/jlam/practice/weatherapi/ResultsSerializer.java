@@ -18,7 +18,7 @@ import java.util.Date;
  */
 public class ResultsSerializer
 {
-    public static FutureDailyForecast ProcessFutureDailyForecastJSON(String jsonString) throws JSONException, IllegalArgumentException
+    public static FutureDailyForecast ParseFutureDailyForecast(String jsonString) throws JSONException, IllegalArgumentException
 
     {
         JSONObject jsonObject = new JSONObject(jsonString);
@@ -49,7 +49,7 @@ public class ResultsSerializer
         return  futureDailyForecast;
     }
 
-    public static WeatherLocation ParseWeatherInfo(String jsonString) throws JSONException, IllegalArgumentException
+    public static WeatherLocation ParseCurrentWeather(String jsonString) throws JSONException, IllegalArgumentException
     {
         WeatherLocation weatherLocation = new WeatherLocation();
 
@@ -59,40 +59,40 @@ public class ResultsSerializer
         // is an array per spec?
 
         // todo:for entries like Hong Kong (no location name) need to display country in location spot
-        Log.d("ParseWeatherInfo", "Attempting to parse JSON response");
+        Log.d("ParseCurrentWeather", "Attempting to parse JSON response");
         JSONObject jsonObject = new JSONObject(jsonString);
         // get first node
         //JSONObject firstNode = jsonArray.getJSONObject(0);
 
         // pull out json objects that has weather info
-        Log.d("ParseWeatherInfo", "Getting weather array and first object");
+        Log.d("ParseCurrentWeather", "Getting weather array and first object");
         JSONArray weather = jsonObject.getJSONArray("weather");
 
         weatherLocation.setWeather(weather.getJSONObject(0).getString("main"));
 
         // null string?
-        Log.d("ParseWeatherInfo", "Getting location name (if present?)");
+        Log.d("ParseCurrentWeather", "Getting location name (if present?)");
         if(jsonObject.has("name"))
         {
             weatherLocation.setLocation(jsonObject.getString("name"));
         }
 
         // this should always be present
-        Log.d("ParseWeatherInfo", "Getting country.");
+        Log.d("ParseCurrentWeather", "Getting country.");
         weatherLocation.setCountry(jsonObject.getJSONObject("sys").getString("country"));
 
         // temps are in kelvin
-        Log.d("ParseWeatherInfo", "Getting temperature.");
+        Log.d("ParseCurrentWeather", "Getting temperature.");
         weatherLocation.setTemperature(Double.toString(jsonObject.getJSONObject("main").getDouble("temp")));
         // get the id of the location. this is different from sql row id
-        Log.d("ParseWeatherInfo", "Getting location lat and lon.");
+        Log.d("ParseCurrentWeather", "Getting location lat and lon.");
         JSONObject jsonObjectCoord = jsonObject.getJSONObject("coord");
         weatherLocation.setLocation_lat(jsonObjectCoord.getDouble("lat"));
         weatherLocation.setLocation_lon(jsonObjectCoord.getDouble("lon"));
 
-        Log.d("ParseWeatherInfo", "Getting location id.");
+        Log.d("ParseCurrentWeather", "Getting location id.");
         weatherLocation.setLocation_id((jsonObject.getInt("id")));
-        Log.d("ParseWeatherInfo", "id value:" + Integer.toString(jsonObject.getInt("id")));
+        Log.d("ParseCurrentWeather", "id value:" + Integer.toString(jsonObject.getInt("id")));
         return weatherLocation;
     }
 
