@@ -1,8 +1,6 @@
-package com.hp.jlam.practice;
+package com.hp.jlam.practice.ui;
 
-import android.app.NotificationManager;
 import android.content.Intent;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +9,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.hp.jlam.practice.OnClickWeatherLocationItem;
+import com.hp.jlam.practice.R;
+import com.hp.jlam.practice.WeatherAppStorage;
 
 import java.util.ArrayList;
 

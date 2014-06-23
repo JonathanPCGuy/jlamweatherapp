@@ -1,5 +1,6 @@
-package com.hp.jlam.practice;
+package com.hp.jlam.practice.ui;
 
+import android.app.AlarmManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -8,18 +9,19 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
 
-import java.text.DateFormat;
-import java.util.ArrayList;
+import com.hp.jlam.practice.ExtraConstants;
+import com.hp.jlam.practice.IntentConstants;
+import com.hp.jlam.practice.R;
+import com.hp.jlam.practice.StartWeatherUpdateReceiver;
+import com.hp.jlam.practice.WeatherUpdateIntentService;
+
+import java.util.Calendar;
 import java.util.Date;
 
 public class DebugActivity extends ActionBarActivity {
@@ -88,12 +90,36 @@ public class DebugActivity extends ActionBarActivity {
          */
 
         // do i need to do this in my own thread?
+        // instead of calling the service directly we'll call the alarm task
+        // set it to call now
+
+
+        SetUpdateAlarm();
+        /*
         Intent serviceIntent = new Intent(this, WeatherUpdateIntentService.class);
         serviceIntent.putExtra(ExtraConstants.LOCATION_LAT, 51.50853);
         serviceIntent.putExtra(ExtraConstants.LOCATION_LON, -0.12574);
         startService(serviceIntent);
+        */
 
     }
+
+    private void SetUpdateAlarm()
+    {
+        Log.d("DebugActivity", "In SetUpdateAlarm");
+        Intent updateWeatherIntent = new Intent(this, StartWeatherUpdateReceiver.class);
+        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, updateWeatherIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        // perhaps in the future the alarm will need to pass in via the intent the location
+        // to update.
+        Calendar futureTime = Calendar.getInstance();
+        futureTime.add(Calendar.MINUTE, 1);
+
+        // maybe i could do repeating? no repeating is still restricted to certain values
+        alarmManager.set(AlarmManager.RTC, futureTime.getTimeInMillis(),  pendingIntent);
+
+    }
+
 
     // receive the broadcast that there has been an update in the weather.
     private BroadcastReceiver testReceiver = new BroadcastReceiver()
@@ -141,6 +167,10 @@ public class DebugActivity extends ActionBarActivity {
                     .setWhen(System.currentTimeMillis());
 
             mNM.notify(NOTIFICATION_ID, notification.build());
+
+            // for recurring alarm we need to re-register since we want custom values
+            // not available with the recurring alarm api
+            SetUpdateAlarm();
 
         }
     };

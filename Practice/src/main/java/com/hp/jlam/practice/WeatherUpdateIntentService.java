@@ -1,10 +1,10 @@
 package com.hp.jlam.practice;
 
 import android.app.IntentService;
-import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.hp.jlam.practice.ui.WeatherLocation;
 import com.hp.jlam.practice.weatherapi.ResultsSerializer;
 import com.hp.jlam.practice.weatherapi.WebInterfaceTask;
 

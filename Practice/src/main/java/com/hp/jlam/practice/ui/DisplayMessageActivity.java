@@ -1,4 +1,4 @@
-package com.hp.jlam.practice;
+package com.hp.jlam.practice.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.hp.jlam.practice.R;
 
 public class DisplayMessageActivity extends ActionBarActivity {
 

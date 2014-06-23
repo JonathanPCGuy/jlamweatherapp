@@ -1,4 +1,4 @@
-package com.hp.jlam.practice;
+package com.hp.jlam.practice.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TextView;
+
+import com.hp.jlam.practice.R;
 
 /**
  * Created by lamjon on 1/30/14.

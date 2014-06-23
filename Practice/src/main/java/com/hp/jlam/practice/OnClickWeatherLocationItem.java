@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.hp.jlam.practice.ui.DetailedWeatherActivity;
+import com.hp.jlam.practice.ui.WeatherLocation;
+
 /**
  * Created by lamjon on 4/12/2014.
  */

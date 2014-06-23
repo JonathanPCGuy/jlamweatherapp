@@ -1,4 +1,4 @@
-package com.hp.jlam.practice;
+package com.hp.jlam.practice.ui;
 
 
 import android.content.Context;
@@ -15,6 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.hp.jlam.practice.R;
+import com.hp.jlam.practice.WeatherAppStorage;
 import com.hp.jlam.practice.weatherapi.APICallResults;
 import com.hp.jlam.practice.weatherapi.ResultsSerializer;
 import com.hp.jlam.practice.weatherapi.WebInterfaceTask;

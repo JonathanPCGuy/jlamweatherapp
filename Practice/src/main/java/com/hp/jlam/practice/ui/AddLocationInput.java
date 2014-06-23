@@ -1,4 +1,4 @@
-package com.hp.jlam.practice;
+package com.hp.jlam.practice.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.hp.jlam.practice.R;
 
 // first get fragments working
 // then get rotational layout working? (horizontal should look nice?)

@@ -10,6 +10,8 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.hp.jlam.practice.ui.MainActivity;
+
 /**
  * Created by lamjon on 6/10/2014.
  * Based on service tutorial: http://developer.android.com/reference/android/app/Service.html

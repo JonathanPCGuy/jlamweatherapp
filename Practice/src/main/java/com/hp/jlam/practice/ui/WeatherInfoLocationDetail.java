@@ -1,4 +1,4 @@
-package com.hp.jlam.practice;
+package com.hp.jlam.practice.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.hp.jlam.practice.R;
 import com.hp.jlam.practice.weatherapi.DailyForecast;
 import com.hp.jlam.practice.weatherapi.FutureDailyForecast;
 

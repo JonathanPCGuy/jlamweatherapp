@@ -1,9 +1,11 @@
-package com.hp.jlam.practice;
+package com.hp.jlam.practice.ui;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.hp.jlam.practice.R;
 
 //todo: reference whatever libraries / graphics we use in this app
 

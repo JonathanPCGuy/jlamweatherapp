@@ -1,4 +1,4 @@
-package com.hp.jlam.practice;
+package com.hp.jlam.practice.ui;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.hp.jlam.practice.ExtraConstants;
+import com.hp.jlam.practice.R;
 import com.hp.jlam.practice.weatherapi.APICallResults;
 import com.hp.jlam.practice.weatherapi.FutureDailyForecast;
 import com.hp.jlam.practice.weatherapi.ResultsSerializer;
