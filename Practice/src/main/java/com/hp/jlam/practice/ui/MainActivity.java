@@ -1,6 +1,7 @@
 package com.hp.jlam.practice.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,9 +11,12 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.hp.jlam.practice.AppConstants;
 import com.hp.jlam.practice.OnClickWeatherLocationItem;
 import com.hp.jlam.practice.R;
 import com.hp.jlam.practice.WeatherAppStorage;
+import com.hp.jlam.practice.WeatherPrefs;
+import com.hp.jlam.practice.WeatherUpdateLocation;
 
 import java.util.ArrayList;
 
@@ -132,7 +136,16 @@ public class MainActivity extends ActionBarActivity {
         // todo: how to do communication to service, background task, etc.
         //Intent intent = new Intent(this, WeatherService.class);
         //startService(intent);
+
+        // debug: put the specified location for updates in the shared prefs instance
+        // later on this will be set via long press or other methods
+        // manually set the location
+        //serviceIntent.putExtra(ExtraConstants.LOCATION_LAT, 51.50853);
+        //serviceIntent.putExtra(ExtraConstants.LOCATION_LON, -0.12574)
+        WeatherPrefs.SetWeatherUpdateLocation(this, new WeatherUpdateLocation(29.76, -95.36));
     }
+
+
 
     private void InitializeStorage()
     {

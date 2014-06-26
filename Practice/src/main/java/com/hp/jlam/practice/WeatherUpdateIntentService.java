@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
 
+import com.hp.jlam.practice.receivers.UpdateWeatherNotificationReceiver;
 import com.hp.jlam.practice.ui.WeatherLocation;
 import com.hp.jlam.practice.weatherapi.ResultsSerializer;
 import com.hp.jlam.practice.weatherapi.WebInterfaceTask;
@@ -77,7 +78,8 @@ public class WeatherUpdateIntentService extends IntentService
             Log.e("WeatherUpdateIntentService", errorMsg);
         }
 
-        Intent resultBroadcast = new Intent(IntentConstants.WEATHER_UPDATE);
+        Intent resultBroadcast = new Intent(this, UpdateWeatherNotificationReceiver.class);
+        //new Intent(IntentConstants.WEATHER_UPDATE);
 
         resultBroadcast.putExtra(ExtraConstants.UPDATE_SUCCESS, success);
         if(success)

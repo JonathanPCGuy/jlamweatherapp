@@ -71,7 +71,8 @@
             android:label="@string/local_service_name">
         </service>
         <service android:name=".WeatherUpdateIntentService"/>
-        <receiver android:name=".StartWeatherUpdateReceiver"/>
+        <receiver android:name=".receivers.StartWeatherUpdateReceiver" android:exported="false"/>
+        <receiver android:name=".receivers.UpdateWeatherNotificationReceiver" android:exported="false"/>
     </application>
 
 

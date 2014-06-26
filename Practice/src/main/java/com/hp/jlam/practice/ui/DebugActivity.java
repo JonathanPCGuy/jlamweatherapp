@@ -18,11 +18,12 @@ import android.view.View;
 import com.hp.jlam.practice.ExtraConstants;
 import com.hp.jlam.practice.IntentConstants;
 import com.hp.jlam.practice.R;
-import com.hp.jlam.practice.StartWeatherUpdateReceiver;
+import com.hp.jlam.practice.WeatherPrefs;
 import com.hp.jlam.practice.WeatherUpdateIntentService;
+import com.hp.jlam.practice.WeatherUpdateLocation;
+import com.hp.jlam.practice.receivers.StartWeatherUpdateReceiver;
 
 import java.util.Calendar;
-import java.util.Date;
 
 public class DebugActivity extends ActionBarActivity {
 
@@ -94,13 +95,18 @@ public class DebugActivity extends ActionBarActivity {
         // set it to call now
 
 
-        SetUpdateAlarm();
+        //SetUpdateAlarm();
         /*
         Intent serviceIntent = new Intent(this, WeatherUpdateIntentService.class);
         serviceIntent.putExtra(ExtraConstants.LOCATION_LAT, 51.50853);
         serviceIntent.putExtra(ExtraConstants.LOCATION_LON, -0.12574);
         startService(serviceIntent);
         */
+        Intent serviceIntent = new Intent(this, WeatherUpdateIntentService.class);
+        WeatherUpdateLocation weatherUpdateLocation = WeatherPrefs.GetWeatherUpdateLocation(this);
+        serviceIntent.putExtra(ExtraConstants.LOCATION_LAT, weatherUpdateLocation.lat);
+        serviceIntent.putExtra(ExtraConstants.LOCATION_LON, weatherUpdateLocation.lon);
+        startService(serviceIntent);
 
     }
 
@@ -116,7 +122,7 @@ public class DebugActivity extends ActionBarActivity {
         futureTime.add(Calendar.MINUTE, 1);
 
         // maybe i could do repeating? no repeating is still restricted to certain values
-        alarmManager.set(AlarmManager.RTC, futureTime.getTimeInMillis(),  pendingIntent);
+        alarmManager.set(AlarmManager.RTC, futureTime.getTimeInMillis(), pendingIntent);
 
     }
 
