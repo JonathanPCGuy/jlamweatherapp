@@ -5,22 +5,28 @@ import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.hp.jlam.practice.AppConstants;
+import com.hp.jlam.practice.ExtraConstants;
 import com.hp.jlam.practice.OnClickWeatherLocationItem;
 import com.hp.jlam.practice.R;
 import com.hp.jlam.practice.WeatherAppStorage;
 import com.hp.jlam.practice.WeatherPrefs;
+import com.hp.jlam.practice.WeatherUpdateIntentService;
 import com.hp.jlam.practice.WeatherUpdateLocation;
 
 import java.util.ArrayList;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity
+{
 
     public final static String EXTRA_MESSAGE = "com.hp.jlam.practice.MESSAGE";
     public final static String EXTRA_LOCATION = "com.hp.jlam.practice.LOCATION";
@@ -30,6 +36,7 @@ public class MainActivity extends ActionBarActivity {
     protected ArrayList<WeatherLocation> weatherLocations;
     protected WeatherLocationAdapter weatherLocationAdapter;
     private ListView locationListView;
+    private WeatherAppStorage weatherAppStorage;
 
     // holds the notification object
     // so we can keep track of it
@@ -85,7 +92,7 @@ public class MainActivity extends ActionBarActivity {
         // look for save data
         Log.v("onCreate MainActivity", "In MainActivity onCreate");
 
-        WeatherAppStorage weatherAppStorage = new WeatherAppStorage(this);
+        this.weatherAppStorage = new WeatherAppStorage(this);
 
         Log.d("onCreate MainActivity", "Getting write access to db...");
         // need to do this to ensure tables are present if not created
@@ -115,7 +122,15 @@ public class MainActivity extends ActionBarActivity {
 
         locationListView.setAdapter(weatherLocationAdapter);
         locationListView.setOnItemClickListener(new OnClickWeatherLocationItem());
+        registerForContextMenu(locationListView);
+        locationListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
+                return false;
+            }
+        });
+        // i want to put the handler in here so I can invoke ui stuff. how to do this?
         Log.d("MainActivity - onCreate", "Signal list view that contents may have been updated.");
         this.UpdateWeatherLocationListView();
 
@@ -142,9 +157,68 @@ public class MainActivity extends ActionBarActivity {
         // manually set the location
         //serviceIntent.putExtra(ExtraConstants.LOCATION_LAT, 51.50853);
         //serviceIntent.putExtra(ExtraConstants.LOCATION_LON, -0.12574)
-        WeatherPrefs.SetWeatherUpdateLocation(this, new WeatherUpdateLocation(29.76, -95.36));
+        //WeatherPrefs.SetWeatherUpdateLocation(this, new WeatherUpdateLocation(29.76, -95.36));
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo contextMenuInfo)
+    {
+        Log.d("MainActivity", "onCreateContextMenu");
+        if(view.getId() == R.id.listViewLocations)
+        {
+            MenuInflater menuInflater = getMenuInflater();
+            menuInflater.inflate(R.menu.main_activity_locations_list_menu, menu);
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem menuItem)
+    {
+        Log.d("MainActivity", "onContextItemSelected");
+        AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo)menuItem.getMenuInfo();
+
+        //((WeatherLocation)parent.getItemAtPosition(position)).getLocation_lat());
+        switch(menuItem.getItemId())
+        {
+            case(R.id.set_as_update_location_menu_item):
+                try
+                {
+                    // todo: need to investigate location name changes and how to fix...
+                    UpdateWeatherUpdateLocation(menuInfo.id);
+
+
+                    return true;
+                }
+                catch(Exception e)
+                {
+                    // should be more granular about my exceptions?
+                    Log.e("MainActivity", "Exception thrown while attempting to retrieve weather location to set update location:" + e.getMessage());
+                    return false;
+                }
+
+                //WeatherLocation weatherLocation = (WeatherLocation)menuInfo.
+
+
+            default:
+                return  false;
+        }
+    }
+
+    private void UpdateWeatherUpdateLocation(long id)
+    {
+        WeatherLocation weatherLocation = this.weatherAppStorage.getWeatherLocation(id);
+        WeatherUpdateLocation weatherUpdateLocation = new WeatherUpdateLocation();
+        weatherUpdateLocation.lat = weatherLocation.getLocation_lat();
+        weatherUpdateLocation.lon = weatherLocation.getLocation_lon();
+        WeatherPrefs.SetWeatherUpdateLocation(this, weatherUpdateLocation);
+
+        // update now
+        Intent serviceIntent = new Intent(this, WeatherUpdateIntentService.class);
+        serviceIntent.putExtra(ExtraConstants.LOCATION_LAT, weatherUpdateLocation.lat);
+        serviceIntent.putExtra(ExtraConstants.LOCATION_LON, weatherUpdateLocation.lon);
+        startService(serviceIntent);
+
+    }
 
 
     private void InitializeStorage()
@@ -247,6 +321,7 @@ public class MainActivity extends ActionBarActivity {
             }
         }
     }
+
 
     private void UpdateWeatherLocationListView()
     {

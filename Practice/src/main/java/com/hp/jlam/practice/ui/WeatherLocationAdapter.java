@@ -71,5 +71,9 @@ public class WeatherLocationAdapter extends ArrayAdapter<WeatherLocation>
         this.objects = objects;
     }
 
-
+    @Override
+    public long getItemId(int position)
+    {
+        return objects.get(position).getId();
+    }
 }

@@ -33,4 +33,6 @@
     <string name="local_service_stopped">WeatherService stopped.</string>
     <string name="local_service_name">JLam Weather App Service</string>
 
+    <string name="set_as_update_location">Set as update location</string>
+
 </resources>
