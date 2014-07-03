@@ -22,6 +22,7 @@ import com.hp.jlam.practice.WeatherAppStorage;
 import com.hp.jlam.practice.WeatherPrefs;
 import com.hp.jlam.practice.WeatherUpdateIntentService;
 import com.hp.jlam.practice.WeatherUpdateLocation;
+import com.hp.jlam.practice.ui.activities.SettingsActivity;
 
 import java.util.ArrayList;
 
@@ -246,6 +247,8 @@ public class MainActivity extends ActionBarActivity
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.action_settings:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
                 return true;
             /*case R.id.action_email:
                 EditText editText = (EditText)findViewById(R.id.edit_message);

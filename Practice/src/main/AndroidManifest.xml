@@ -65,16 +65,29 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="MainActivity" />
         </activity>
+
         <service
-            android:name="WeatherService"
+            android:name=".WeatherService"
             android:icon="@drawable/ic_stat_sun"
-            android:label="@string/local_service_name">
+            android:label="@string/local_service_name" >
         </service>
-        <service android:name=".WeatherUpdateIntentService"/>
-        <receiver android:name=".receivers.StartWeatherUpdateReceiver" android:exported="false"/>
-        <receiver android:name=".receivers.UpdateWeatherNotificationReceiver" android:exported="false"/>
+        <service android:name=".WeatherUpdateIntentService" />
+
+        <receiver
+            android:name=".receivers.StartWeatherUpdateReceiver"
+            android:exported="false" />
+        <receiver
+            android:name=".receivers.UpdateWeatherNotificationReceiver"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.activities.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".ui.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hp.jlam.practice.ui.MainActivity" />
+        </activity>
     </application>
-
-
 
 </manifest>

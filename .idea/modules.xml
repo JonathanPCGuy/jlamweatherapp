@@ -4,8 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/JLamWeatherApp.iml" filepath="$PROJECT_DIR$/JLamWeatherApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/Practice/Practice.iml" filepath="$PROJECT_DIR$/Practice/Practice.iml" />
-      <module fileurl="file://$PROJECT_DIR$/PracticeProject.iml" filepath="$PROJECT_DIR$/PracticeProject.iml" />
-      <module fileurl="file://$PROJECT_DIR$/PracticeProjectGit.iml" filepath="$PROJECT_DIR$/PracticeProjectGit.iml" />
     </modules>
   </component>
 </project>
