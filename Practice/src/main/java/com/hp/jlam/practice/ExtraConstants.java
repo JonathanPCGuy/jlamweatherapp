@@ -19,5 +19,5 @@ public class ExtraConstants
 
     public final static String LOCATION_CURRENT_TEMP = "CURRENT_TEMP";
 
-
+    public final static String LOCATION_FULL_NAME = "LOCATION_FULL_NAME";
 }

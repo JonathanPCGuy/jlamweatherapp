@@ -5,14 +5,9 @@
       <GradleProjectSettings>
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="modules">
-          <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/Practice" />
-          </set>
-        </option>
       </GradleProjectSettings>
     </option>
+    <option name="gradleVmOptions" value="-Dhttp.proxyHost=proxy.houston.hp.com -Dhttp.proxyPort=8080" />
   </component>
 </project>
 

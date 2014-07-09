@@ -36,11 +36,12 @@ public class UpdateWeatherNotificationReceiver extends BroadcastReceiver
         if(intent.getBooleanExtra(ExtraConstants.UPDATE_SUCCESS, false))
         {
             // update the notification
-            String location = intent.getStringExtra(ExtraConstants.LOCATION_LOCATION);
-            String country = intent.getStringExtra(ExtraConstants.LOCATION_COUNTRY);
+            //String location = intent.getStringExtra(ExtraConstants.LOCATION_LOCATION);
+            //String country = intent.getStringExtra(ExtraConstants.LOCATION_COUNTRY);
+            String locationFullname = intent.getStringExtra(ExtraConstants.LOCATION_FULL_NAME);
             Double currentTemp = intent.getDoubleExtra(ExtraConstants.LOCATION_CURRENT_TEMP, -9999);
-            title = String.format("%s, %s", location, country);
-            text = Double.toString(currentTemp);
+            title = Double.toString(currentTemp);
+            text = locationFullname;
         }
         else
         {

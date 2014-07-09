@@ -211,12 +211,16 @@ public class MainActivity extends ActionBarActivity
         WeatherUpdateLocation weatherUpdateLocation = new WeatherUpdateLocation();
         weatherUpdateLocation.lat = weatherLocation.getLocation_lat();
         weatherUpdateLocation.lon = weatherLocation.getLocation_lon();
+
+        weatherUpdateLocation.locationFullName = weatherLocation.getFullLocation();
+
         WeatherPrefs.SetWeatherUpdateLocation(this, weatherUpdateLocation);
 
         // update now
         Intent serviceIntent = new Intent(this, WeatherUpdateIntentService.class);
         serviceIntent.putExtra(ExtraConstants.LOCATION_LAT, weatherUpdateLocation.lat);
         serviceIntent.putExtra(ExtraConstants.LOCATION_LON, weatherUpdateLocation.lon);
+        serviceIntent.putExtra(ExtraConstants.LOCATION_FULL_NAME, weatherUpdateLocation.locationFullName);
         startService(serviceIntent);
 
     }
