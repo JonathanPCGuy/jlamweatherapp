@@ -25,6 +25,7 @@ public class StartWeatherUpdateReceiver extends BroadcastReceiver
 
         serviceIntent.putExtra(ExtraConstants.LOCATION_LAT, weatherUpdateLocation.lat);
         serviceIntent.putExtra(ExtraConstants.LOCATION_LON, weatherUpdateLocation.lon);
+        serviceIntent.putExtra(ExtraConstants.LOCATION_FULL_NAME, weatherUpdateLocation.locationFullName);
         //serviceIntent.putExtra(ExtraConstants.LOCATION_LAT, 51.50853);
         //serviceIntent.putExtra(ExtraConstants.LOCATION_LON, -0.12574);
         context.startService(serviceIntent);

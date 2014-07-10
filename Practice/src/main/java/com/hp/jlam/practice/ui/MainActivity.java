@@ -22,6 +22,7 @@ import com.hp.jlam.practice.WeatherAppStorage;
 import com.hp.jlam.practice.WeatherPrefs;
 import com.hp.jlam.practice.WeatherUpdateIntentService;
 import com.hp.jlam.practice.WeatherUpdateLocation;
+import com.hp.jlam.practice.ui.activities.SettingsActivity;
 
 import java.util.ArrayList;
 
@@ -210,12 +211,16 @@ public class MainActivity extends ActionBarActivity
         WeatherUpdateLocation weatherUpdateLocation = new WeatherUpdateLocation();
         weatherUpdateLocation.lat = weatherLocation.getLocation_lat();
         weatherUpdateLocation.lon = weatherLocation.getLocation_lon();
+
+        weatherUpdateLocation.locationFullName = weatherLocation.getFullLocation();
+
         WeatherPrefs.SetWeatherUpdateLocation(this, weatherUpdateLocation);
 
         // update now
         Intent serviceIntent = new Intent(this, WeatherUpdateIntentService.class);
         serviceIntent.putExtra(ExtraConstants.LOCATION_LAT, weatherUpdateLocation.lat);
         serviceIntent.putExtra(ExtraConstants.LOCATION_LON, weatherUpdateLocation.lon);
+        serviceIntent.putExtra(ExtraConstants.LOCATION_FULL_NAME, weatherUpdateLocation.locationFullName);
         startService(serviceIntent);
 
     }
@@ -246,6 +251,8 @@ public class MainActivity extends ActionBarActivity
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.action_settings:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
                 return true;
             /*case R.id.action_email:
                 EditText editText = (EditText)findViewById(R.id.edit_message);

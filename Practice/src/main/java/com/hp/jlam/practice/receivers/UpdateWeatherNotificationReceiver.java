@@ -11,13 +11,11 @@ import android.util.Log;
 
 import com.hp.jlam.practice.ExtraConstants;
 import com.hp.jlam.practice.R;
+import com.hp.jlam.practice.WeatherPrefs;
 import com.hp.jlam.practice.ui.MainActivity;
 
 import java.util.Calendar;
 
-/**
- * Created by lamjon on 6/23/2014.
- */
 public class UpdateWeatherNotificationReceiver extends BroadcastReceiver
 {
     private static final int NOTIFICATION_ID = R.string.local_service_started;
@@ -29,18 +27,19 @@ public class UpdateWeatherNotificationReceiver extends BroadcastReceiver
 
         NotificationManager mNM = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder notification;
-        String title = "";
-        String text = "";
+        String title;
+        String text;
 
         // in the future we can use an on boot alarm to setup all of this
         if(intent.getBooleanExtra(ExtraConstants.UPDATE_SUCCESS, false))
         {
             // update the notification
-            String location = intent.getStringExtra(ExtraConstants.LOCATION_LOCATION);
-            String country = intent.getStringExtra(ExtraConstants.LOCATION_COUNTRY);
+            //String location = intent.getStringExtra(ExtraConstants.LOCATION_LOCATION);
+            //String country = intent.getStringExtra(ExtraConstants.LOCATION_COUNTRY);
+            String locationFullname = intent.getStringExtra(ExtraConstants.LOCATION_FULL_NAME);
             Double currentTemp = intent.getDoubleExtra(ExtraConstants.LOCATION_CURRENT_TEMP, -9999);
-            title = String.format("%s, %s", location, country);
-            text = Double.toString(currentTemp);
+            title = Double.toString(currentTemp);
+            text = locationFullname;
         }
         else
         {
@@ -79,10 +78,21 @@ public class UpdateWeatherNotificationReceiver extends BroadcastReceiver
         // perhaps in the future the alarm will need to pass in via the intent the location
         // to update.
         Calendar futureTime = Calendar.getInstance();
-        futureTime.add(Calendar.MINUTE, 1);
+        int updateInterval =  WeatherPrefs.GetWeatherUpdateInterval(context);
+        if(updateInterval == -1)
+        {
 
-        // maybe i could do repeating? no repeating is still restricted to certain values
-        alarmManager.set(AlarmManager.RTC, futureTime.getTimeInMillis(),  pendingIntent);
-
+            Log.d("SetUpdateAlarm", "Warning, -1 received, will not update notifications!");
+            alarmManager.cancel(pendingIntent);
+            // need to also clear out notifications?
+        }
+        else
+        {
+            futureTime.add(Calendar.MINUTE, updateInterval);
+            // should use a TAG
+            Log.d("SetUpdateAlarm", String.format("%d minute alarm set", updateInterval));
+            // maybe i could do repeating? no repeating is still restricted to certain values
+            alarmManager.set(AlarmManager.RTC, futureTime.getTimeInMillis(),  pendingIntent);
+        }
     }
 }

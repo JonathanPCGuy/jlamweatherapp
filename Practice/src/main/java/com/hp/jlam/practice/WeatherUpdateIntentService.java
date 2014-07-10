@@ -47,6 +47,7 @@ public class WeatherUpdateIntentService extends IntentService
         // if success update notification
         double lat = intent.getDoubleExtra(ExtraConstants.LOCATION_LAT, -9999);
         double lon = intent.getDoubleExtra(ExtraConstants.LOCATION_LON, -9999);
+        String locationFullName = intent.getStringExtra(ExtraConstants.LOCATION_FULL_NAME);
         
         //todo: if value is -9999 abort intent?
 
@@ -84,8 +85,9 @@ public class WeatherUpdateIntentService extends IntentService
         resultBroadcast.putExtra(ExtraConstants.UPDATE_SUCCESS, success);
         if(success)
         {
-            resultBroadcast.putExtra(ExtraConstants.LOCATION_LOCATION, currentWeather.getLocation());
-            resultBroadcast.putExtra(ExtraConstants.LOCATION_COUNTRY, currentWeather.getCountry());
+            //resultBroadcast.putExtra(ExtraConstants.LOCATION_LOCATION, currentWeather.getLocation());
+            //resultBroadcast.putExtra(ExtraConstants.LOCATION_COUNTRY, currentWeather.getCountry());
+            resultBroadcast.putExtra(ExtraConstants.LOCATION_FULL_NAME, locationFullName);
             // this needs to be converted to C/F
             resultBroadcast.putExtra(ExtraConstants.LOCATION_CURRENT_TEMP, Double.parseDouble(currentWeather.getTemperature()));
         }
