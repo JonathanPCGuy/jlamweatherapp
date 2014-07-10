@@ -12,9 +12,9 @@
     <string name="pref_title_enable_weather_update">Enable weather updates</string>
     <string name="pref_summary_enable_weather_update">Display weather updates in notification area.</string>
     <!-- is the above too long? -->
-    <string name="pref_title_weather_update_frequency">Update frequency</string>
-    <string name="pref_summary_weather_update_frequency">Set how often weather updates should happen.</string>
-    <string-array name="pref_weather_update_frequency_titles">
+    <string name="pref_title_weather_update_interval">Update interval</string>
+    <string name="pref_summary_weather_update_interval">Set how often weather updates should happen.</string>
+    <string-array name="pref_weather_update_interval_titles">
         <item>1 minute</item><!-- debug value, should be removed for production -->
         <item>15 minutes</item>
         <item>30 minutes</item>
@@ -23,9 +23,8 @@
         <item>6 hours</item>
         <item>12 hours</item>
         <item>24 hours</item>
-        <item>Never</item>
     </string-array>
-    <string-array name="pref_weather_update_frequency_values">
+    <string-array name="pref_weather_update_interval_values">
         <item>1</item>
         <item>15</item>
         <item>30</item>
@@ -35,7 +34,7 @@
         <item>720</item>
         <item>1440</item>
     </string-array>
-    <string name="pref_weather_update_frequency_dialog_title">Weather update frequency</string>
+    <string name="pref_weather_update_interval_dialog_title">Weather update frequency</string>
 
     <string name = "pref_title_clear_data">Clear location list</string>
 

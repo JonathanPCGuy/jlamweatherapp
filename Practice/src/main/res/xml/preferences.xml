@@ -13,13 +13,14 @@
             android:summary="@string/pref_summary_enable_weather_update">
             </CheckBoxPreference>
         <ListPreference
-            android:key="prefWeatherUpdateFrequency"
-            android:title="@string/pref_title_weather_update_frequency"
-            android:entries="@array/pref_weather_update_frequency_titles"
-            android:entryValues="@array/pref_weather_update_frequency_values"
-            android:dialogTitle="@string/pref_weather_update_frequency_dialog_title"
-            android:summary="@string/pref_summary_weather_update_frequency"
+            android:key="@string/pref_key_weather_update_interval"
+            android:title="@string/pref_title_weather_update_interval"
+            android:entries="@array/pref_weather_update_interval_titles"
+            android:entryValues="@array/pref_weather_update_interval_values"
+            android:dialogTitle="@string/pref_weather_update_interval_dialog_title"
+            android:summary="@string/pref_summary_weather_update_interval"
             android:defaultValue="1">
             </ListPreference>
+        <!-- first get this working, then see how to disable pref if certain conditions are hit -->
     </PreferenceCategory>
 </PreferenceScreen>
