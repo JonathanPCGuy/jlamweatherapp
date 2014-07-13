@@ -4,7 +4,7 @@ package com.hp.jlam.practice.weatherapi;
 
 import android.util.Log;
 
-import com.hp.jlam.practice.ui.WeatherLocation;
+import com.hp.jlam.practice.WeatherLocation;
 
 import org.json.JSONArray;
 import org.json.JSONException;

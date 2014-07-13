@@ -1,4 +1,4 @@
-package com.hp.jlam.practice.ui;
+package com.hp.jlam.practice.ui.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

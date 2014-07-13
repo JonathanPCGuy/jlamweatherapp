@@ -1,4 +1,4 @@
-package com.hp.jlam.practice.ui;
+package com.hp.jlam.practice.ui.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.hp.jlam.practice.R;
+import com.hp.jlam.practice.WeatherLocation;
 
 import java.util.ArrayList;
 

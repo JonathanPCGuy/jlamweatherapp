@@ -1,4 +1,4 @@
-package com.hp.jlam.practice.ui;
+package com.hp.jlam.practice.ui.activities;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;

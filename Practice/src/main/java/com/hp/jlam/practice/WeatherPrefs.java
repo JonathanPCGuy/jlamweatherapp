@@ -51,4 +51,24 @@ public class WeatherPrefs
         SharedPreferences settings = GetDefaultSharedPrefs(context);
         return Integer.parseInt(settings.getString(context.getString(R.string.pref_key_weather_update_interval), "-1"));
     }
+
+    public static TempDisplayUnit GetTempDisplayUnit(Context context)
+    {
+        SharedPreferences settings = GetDefaultSharedPrefs(context);
+        String currentSetting = settings.getString(context.getString(R.string.pref_key_unit_measurement_temp),
+                "K");
+
+        if(currentSetting.equals("C"))
+        {
+            return TempDisplayUnit.CELSIUS;
+        }
+        else if (currentSetting.equals("F"))
+        {
+            return TempDisplayUnit.FAHRENHEIT;
+        }
+        else
+        {
+            return TempDisplayUnit.KELVIN;
+        }
+    }
 }

@@ -62,5 +62,10 @@ public class SettingsActivity extends PreferenceActivity
             Intent serviceIntent = new Intent(this, StartWeatherUpdateReceiver.class);
             sendBroadcast(serviceIntent);
         }
+        else if(key.equals(getString(R.string.pref_key_unit_measurement_temp)))
+        {
+            Log.d(TAG, "Updating temp display");
+            // todo: update existing static notification; save for future display
+        }
     }
 }

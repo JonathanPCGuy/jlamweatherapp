@@ -1,4 +1,4 @@
-package com.hp.jlam.practice.ui;
+package com.hp.jlam.practice.ui.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,7 +20,7 @@ import com.hp.jlam.practice.R;
 public class AddLocationInput extends Fragment
     implements View.OnClickListener
 {
-    OnBeginGetWeatherListener mGetWeatherCallback;
+    public OnBeginGetWeatherListener mGetWeatherCallback;
 
     public interface OnBeginGetWeatherListener
     {

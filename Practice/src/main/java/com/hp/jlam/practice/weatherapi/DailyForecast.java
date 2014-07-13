@@ -1,5 +1,8 @@
 package com.hp.jlam.practice.weatherapi;
 
+import com.hp.jlam.practice.TempDisplayUnit;
+import com.hp.jlam.practice.Utilities;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -13,13 +16,14 @@ public class DailyForecast
     public Date date;
     // for now that's all we'll do, will need to insert more info later
 
-    public static long ConvertToF(double temp)
+    //TempDisplayUnit
+    public String GetHighDisplayString(TempDisplayUnit displayUnit)
     {
-        return Math.round((ConvertToC(temp)) * 1.8 + 32);
+        return Utilities.GetFormattedTempString(this.high, displayUnit);
     }
 
-    public static double ConvertToC(double temp)
+    public String GetLowDisplayString(TempDisplayUnit displayUnit)
     {
-        return (temp) - 273.15;
+        return Utilities.GetFormattedTempString(this.low, displayUnit);
     }
 }

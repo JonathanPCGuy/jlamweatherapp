@@ -1,4 +1,4 @@
-package com.hp.jlam.practice.ui;
+package com.hp.jlam.practice.ui.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +10,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.hp.jlam.practice.R;
+import com.hp.jlam.practice.TempDisplayUnit;
+import com.hp.jlam.practice.WeatherPrefs;
+import com.hp.jlam.practice.ui.activities.DetailedWeatherActivity;
 import com.hp.jlam.practice.weatherapi.DailyForecast;
 import com.hp.jlam.practice.weatherapi.FutureDailyForecast;
 
@@ -68,6 +71,8 @@ public class WeatherInfoLocationDetail extends Fragment
         // 1. need to wipe existing view, if any
         futureForecastDayContainer.removeAllViewsInLayout();
 
+
+
         // add stuff to the layout
         for(int i = 0; i < futureDailyForecast.futureForecast.size(); i++)
         {
@@ -95,16 +100,19 @@ public class WeatherInfoLocationDetail extends Fragment
         //View forecastItemView = getLayoutInflater().inflate(R.layout.weather_day_forecast_item, parent, false);
         View forecastItemView = View.inflate(getActivity().getApplicationContext(),R.layout.weather_day_forecast_item, null);
 
+        //get the desired units of measurement
+        // could be optimized further by getting the value elsewhere?
+        TempDisplayUnit tempDisplayUnit = WeatherPrefs.GetTempDisplayUnit(this.getActivity());
         //GridLayout.inflate(getActivity().getApplicationContext(),R.layout.weather_day_forecast_item, null);
         // this doesn't work because previously added layout have the same id so it's finding the 1st one
         // put in forecast data
 
         TextView textViewTempHigh = (TextView)forecastItemView.findViewById(R.id.textViewTempHigh);
-        textViewTempHigh.setText(Long.toString(DailyForecast.ConvertToF(dailyForecast.high)));
+        textViewTempHigh.setText(dailyForecast.GetHighDisplayString(tempDisplayUnit));
 
         TextView textViewTempLow = (TextView)forecastItemView.findViewById(R.id.textViewTempLow);
 
-        textViewTempLow.setText(Long.toString(DailyForecast.ConvertToF(dailyForecast.low)));
+        textViewTempLow.setText(dailyForecast.GetLowDisplayString(tempDisplayUnit));
         // return view; upon return this should be added to the 5-7 day forecast area
 
         TextView textViewDate = (TextView)forecastItemView.findViewById(R.id.textViewDate);
