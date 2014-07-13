@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.hp.jlam.practice.ui.MainActivity;
+import com.hp.jlam.practice.ui.activities.MainActivity;
 
 /**
  * Created by lamjon on 6/16/2014.

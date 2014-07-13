@@ -1,4 +1,4 @@
-package com.hp.jlam.practice.ui;
+package com.hp.jlam.practice.ui.activities;
 
 import android.app.AlarmManager;
 import android.app.NotificationManager;

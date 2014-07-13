@@ -11,8 +11,9 @@ import android.util.Log;
 
 import com.hp.jlam.practice.ExtraConstants;
 import com.hp.jlam.practice.R;
+import com.hp.jlam.practice.Utilities;
 import com.hp.jlam.practice.WeatherPrefs;
-import com.hp.jlam.practice.ui.MainActivity;
+import com.hp.jlam.practice.ui.activities.MainActivity;
 
 import java.util.Calendar;
 
@@ -36,15 +37,19 @@ public class UpdateWeatherNotificationReceiver extends BroadcastReceiver
             // update the notification
             //String location = intent.getStringExtra(ExtraConstants.LOCATION_LOCATION);
             //String country = intent.getStringExtra(ExtraConstants.LOCATION_COUNTRY);
-            String locationFullname = intent.getStringExtra(ExtraConstants.LOCATION_FULL_NAME);
+            String locationFullName = intent.getStringExtra(ExtraConstants.LOCATION_FULL_NAME);
             Double currentTemp = intent.getDoubleExtra(ExtraConstants.LOCATION_CURRENT_TEMP, -9999);
-            title = Double.toString(currentTemp);
-            text = locationFullname;
+
+            title = Utilities.GetFormattedTempString(currentTemp, WeatherPrefs.GetTempDisplayUnit(context));
+            text = locationFullName;
         }
         else
         {
             title = "Error while updating weather.";
             text = "Will retry in the future";
+            // we should actually not do display this but rather not replace the current display
+            // however what if this is the first time?
+            // or maybe offer a refresh option?
         }
 
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0,

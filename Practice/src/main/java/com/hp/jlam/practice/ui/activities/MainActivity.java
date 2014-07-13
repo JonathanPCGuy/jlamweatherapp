@@ -1,7 +1,7 @@
-package com.hp.jlam.practice.ui;
+package com.hp.jlam.practice.ui.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,7 +14,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.hp.jlam.practice.AppConstants;
 import com.hp.jlam.practice.ExtraConstants;
 import com.hp.jlam.practice.OnClickWeatherLocationItem;
 import com.hp.jlam.practice.R;
@@ -22,7 +21,8 @@ import com.hp.jlam.practice.WeatherAppStorage;
 import com.hp.jlam.practice.WeatherPrefs;
 import com.hp.jlam.practice.WeatherUpdateIntentService;
 import com.hp.jlam.practice.WeatherUpdateLocation;
-import com.hp.jlam.practice.ui.activities.SettingsActivity;
+import com.hp.jlam.practice.WeatherLocation;
+import com.hp.jlam.practice.ui.adapters.WeatherLocationAdapter;
 
 import java.util.ArrayList;
 
@@ -89,7 +89,8 @@ public class MainActivity extends ActionBarActivity
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }*/
-
+        // set default prefs
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         // look for save data
         Log.v("onCreate MainActivity", "In MainActivity onCreate");
 

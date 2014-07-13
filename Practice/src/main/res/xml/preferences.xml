@@ -5,7 +5,7 @@
         <!-- design guidelines indicate we should only use groups
             if there are a > 10 items on the screen. however we will go ahead
             and use them for practice purposes-->
-    <PreferenceCategory android:title="@string/pref_header_weather_updates">
+    <!--<PreferenceCategory android:title="@string/pref_header_weather_updates">-->
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="prefEnableWeatherUpdates"
@@ -22,5 +22,16 @@
             android:defaultValue="1">
             </ListPreference>
         <!-- first get this working, then see how to disable pref if certain conditions are hit -->
-    </PreferenceCategory>
+    <!--</PreferenceCategory>-->
+    <ListPreference
+        android:key="@string/pref_key_unit_measurement_temp"
+        android:title="@string/pref_title_unit_measurement_temp"
+        android:entries="@array/pref_unit_measurement_temp_titles"
+        android:entryValues="@array/pref_unit_measurement_temp_values"
+        android:dialogTitle="@string/pref_dialog_title_unit_measurement_temp"
+        android:summary="@string/pref_summary_unit_measurement_temp"
+        android:defaultValue="F"
+        >
+
+    </ListPreference>
 </PreferenceScreen>

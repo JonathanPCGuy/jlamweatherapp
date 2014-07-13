@@ -1,4 +1,4 @@
-package com.hp.jlam.practice.ui;
+package com.hp.jlam.practice;
 
 /**
  * Created by lamjon on 1/30/14.

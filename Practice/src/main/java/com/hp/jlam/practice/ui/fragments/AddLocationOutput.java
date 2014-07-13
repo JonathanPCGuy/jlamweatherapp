@@ -1,4 +1,4 @@
-package com.hp.jlam.practice.ui;
+package com.hp.jlam.practice.ui.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +12,10 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.hp.jlam.practice.R;
+import com.hp.jlam.practice.TempDisplayUnit;
+import com.hp.jlam.practice.Utilities;
+import com.hp.jlam.practice.WeatherLocation;
+import com.hp.jlam.practice.WeatherPrefs;
 
 /**
  * Created by lamjon on 1/30/14.
@@ -149,7 +153,7 @@ public class AddLocationOutput extends Fragment
         });
     }
 
-    public void UpdateResults(final WeatherLocation result)
+    public void UpdateResults(final WeatherLocation result, final TempDisplayUnit tempDisplayUnit)
     {
         this.getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -161,7 +165,7 @@ public class AddLocationOutput extends Fragment
 
                     // how to easily set values in view? have to getView every single one?
                     ((TextView)getView().findViewById(R.id.textFutureForecastLocation)).setText(result.getFullLocation());
-                    ((TextView)getView().findViewById(R.id.textTemp)).setText(result.getTemperature());
+                    ((TextView)getView().findViewById(R.id.textTemp)).setText(Utilities.GetFormattedTempString(Double.parseDouble(result.getTemperature()), tempDisplayUnit));
                     ((TextView)getView().findViewById(R.id.textDescription)).setText(result.getWeather());
                     Log.d("UpdateResults", result.getFullLocation());
                     Log.d("UpdateResults", result.getTemperature());

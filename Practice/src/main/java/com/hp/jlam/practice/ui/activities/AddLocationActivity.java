@@ -1,4 +1,4 @@
-package com.hp.jlam.practice.ui;
+package com.hp.jlam.practice.ui.activities;
 
 
 import android.content.Context;
@@ -17,6 +17,10 @@ import android.view.ViewGroup;
 
 import com.hp.jlam.practice.R;
 import com.hp.jlam.practice.WeatherAppStorage;
+import com.hp.jlam.practice.WeatherPrefs;
+import com.hp.jlam.practice.ui.fragments.AddLocationInput;
+import com.hp.jlam.practice.ui.fragments.AddLocationOutput;
+import com.hp.jlam.practice.WeatherLocation;
 import com.hp.jlam.practice.weatherapi.APICallResults;
 import com.hp.jlam.practice.weatherapi.ResultsSerializer;
 import com.hp.jlam.practice.weatherapi.WebInterfaceTask;
@@ -165,7 +169,7 @@ public class AddLocationActivity extends ActionBarActivity
           //      (AddLocationOutput)(getSupportFragmentManager().findFragmentByTag("checkWeatherInput"));
         Log.d("UpdateResultUI", "Processing WeatherResult...");
         this.ToggleSpinner(false);
-        this.addLocationOutputFragment.UpdateResults(result);
+        this.addLocationOutputFragment.UpdateResults(result, WeatherPrefs.GetTempDisplayUnit(this));
         this.addLocationInputFragment.EnableButton(true);
         this.weatherLocationQueryResult = result;
         //outputFragment.UpdateResults(result);

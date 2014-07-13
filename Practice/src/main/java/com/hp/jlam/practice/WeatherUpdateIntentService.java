@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.hp.jlam.practice.receivers.UpdateWeatherNotificationReceiver;
-import com.hp.jlam.practice.ui.WeatherLocation;
 import com.hp.jlam.practice.weatherapi.ResultsSerializer;
 import com.hp.jlam.practice.weatherapi.WebInterfaceTask;
 
